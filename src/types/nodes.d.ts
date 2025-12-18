@@ -29,6 +29,10 @@ export interface CebolBasicStatementInterface {
 export interface CebolParserInterface extends CebolBasicParserInterface {
     lexer: CebolLexerInterface;
 
+    get can_factor(): boolean;
+    get can_term(): boolean;
+    get can_expr(): boolean;
+
     eat(tokenType: CebolLexicalTokenEnum): void;
     factor(): CebolASTNode;
     term(): CebolASTNode;
@@ -37,6 +41,4 @@ export interface CebolParserInterface extends CebolBasicParserInterface {
 }
 
 
-export interface CebolKeywordSatementInterface extends CebolBasicStatementInterface {
-    program: CebolBasicStatementInterface;
-}
+export interface CebolKeywordSatementInterface extends CebolBasicStatementInterface {}
