@@ -1,0 +1,15 @@
+flowchart LR
+    a(Start)
+    b(Lexer)
+    c(Tokens)
+    d(Parser)
+    e(AST)
+    f(Interpreter)
+    g(Output / Error)
+
+    a --> b
+    b --> c
+    c --> d
+    d --> e
+    e --> f
+    f --> g
