@@ -11,6 +11,15 @@ export class CebolBinaryOpNode implements CebolBinaryOpNodeInterface {
 		this.right = _right;
 	}
 
+	public toObject(): object {
+		return {
+			type: "CebolBinaryOpNode",
+			left: this.left.toObject(),
+			operator: this.operator.toObject(),
+			right: this.right.toObject(),
+		};
+	}
+	
 	public toString(): string {
 		return `CebolBinaryOpNode(${this.left.toString()}, ${this.operator.toString()}, ${this.right.toString()})`;
 	}

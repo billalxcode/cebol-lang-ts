@@ -10,12 +10,15 @@ export enum CebolLexicalTokenEnum {
 	COMMENT = "COMMENT",
 	LBRACE = "LBRACE",
 	RBRACE = "RBRACE",
+    COLON = "COLON",
+    COMMA = "COMMA",
 	LPARENTHESES = "LPARENTHESES",
 	RPARENTHESES = "RPARENTHESES",
 	EOF = "EOF",
 }
 
 export interface CebolBaseNodeInterface {
+    toObject(): object;
     toString(): string;
 }
 
@@ -40,11 +43,18 @@ export interface CebolStringNodeInterface extends CebolBaseNodeInterface {
 
 export interface CebolProgramNodeInterface extends CebolBaseNodeInterface {
     readonly name: string;
-    readonly body: CebolBaseNodeInterface[];
+    readonly bodies: CebolBaseNodeInterface[];
+    readonly params: string[];
+}
+
+export interface CebolConditionNodeInterface extends CebolBaseNodeInterface {
+    readonly condition: CebolBaseNodeInterface;
+    readonly trueBranch: CebolBaseNodeInterface[];
+    readonly falseBranch: CebolBaseNodeInterface[] | null;
 }
 
 export interface CebolPrintNodeInterface extends CebolBaseNodeInterface {
-    readonly expression: CebolBaseNodeInterface;
+    readonly expressions: CebolBaseNodeInterface[];
 }
 
 export interface CebolTokenInterface extends CebolBaseNodeInterface {
@@ -54,10 +64,18 @@ export interface CebolTokenInterface extends CebolBaseNodeInterface {
     readonly column: number;
 }
 
+export interface CebolVariableNodeInterface extends CebolBaseNodeInterface {
+    readonly name: string;
+    readonly varType: CebolLexicalTokenEnum.NUMBER | CebolLexicalTokenEnum.STRING;
+    readonly value: CebolASTNode;
+}
+
 export type CebolASTNode =
     | CebolNumberNodeInterface
     | CebolStringNodeInterface
     | CebolBinaryOpNodeInterface
     | CebolAssignNodeInterface
     | CebolPrintNodeInterface
-    | CebolProgramNodeInterface;
+    | CebolProgramNodeInterface
+    | CebolConditionNodeInterface
+    | CebolVariableNodeInterface;

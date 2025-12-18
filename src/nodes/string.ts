@@ -7,6 +7,13 @@ export class CebolStringNode implements CebolStringNodeInterface {
 		this.value = _value;
 	}
 
+	public toObject(): object {
+		return {
+			type: "CebolStringNode",
+			value: this.value,
+		};
+	}
+	
 	public toString(): string {
 		return `CebolStringNode("${this.value}")`;
 	}

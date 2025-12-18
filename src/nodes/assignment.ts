@@ -8,6 +8,14 @@ export class CebolAssignNode implements CebolAssignNodeInterface {
 		this.value = _value;
 	}
 
+	public toObject(): object {
+		return {
+			type: "CebolAssignNode",
+			variable: this.variable.toObject(),
+			value: this.value.toObject(),
+		};
+	}
+	
 	public toString(): string {
 		return `CebolAssignNode(${this.variable.toString()}, ${this.value.toString()})`;
 	}
