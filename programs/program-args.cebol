@@ -1,0 +1,12 @@
+program tambah(a, b) {
+    atur angka hasil = a + b
+
+    cetak(hasil)
+}
+
+program utama() {
+    atur angka a = 10
+    atur angka b = 20
+
+    tambah(a, b)
+}
