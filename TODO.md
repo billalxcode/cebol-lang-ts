@@ -1,4 +1,4 @@
-# 🧱 LEXER (Lexical Analyzer)
+# LEXER (Lexical Analyzer)
 - [x] Definisikan enum TokenType
 - [x] Number
 - [x] String
@@ -28,9 +28,7 @@
 - [ ] Escape sequence string (\n, \t, \")
 - [ ] Lexer unit test
 
-⸻
-
-🌳 PARSER (Syntax Analyzer)
+# PARSER (Syntax Analyzer)
 
 Core Parser
 - [x] Parser class
@@ -77,9 +75,7 @@ Error Handling
 - [ ] Line & column error reporting
 - [x] Unexpected token message
 
-⸻
-
-🌲 AST (Abstract Syntax Tree)
+# AST (Abstract Syntax Tree)
 
 Base
 - [x] ASTNode base interface (CebolBaseNodeInterface)
@@ -113,9 +109,7 @@ Program Nodes
 - [x] Program parameters
 - [x] Program body
 
-⸻
-
-🧠 INTERPRETER / EVALUATOR
+# INTERPRETER / EVALUATOR
 
 Core Interpreter
 - [x] Interpreter class (CebolInterpreter)
@@ -145,9 +139,7 @@ Program Execution
 - [ ] Program return values
 - [ ] Recursive program support
 
-⸻
-
-🌍 ENVIRONMENT & SCOPE
+# ENVIRONMENT & SCOPE
 - [x] Environment class (globals object)
 - [x] Variable define (melalui assignment)
 - [x] Variable get (dari globals)
@@ -158,9 +150,7 @@ Program Execution
 - [ ] Variable shadowing
 - [x] Undefined variable error (fallback to string value)
 
-⸻
-
-🔧 FUNCTION SUPPORT
+# FUNCTION SUPPORT
 - [x] FunctionDeclarationNode (CebolProgramNode)
 - [ ] FunctionCallNode
 - [x] Parameter parsing (dalam program statement)
@@ -169,18 +159,14 @@ Program Execution
 - [ ] Return value handling
 - [ ] Recursive function support
 
-⸻
-
-📦 BUILT-IN FUNCTION
+# BUILT-IN FUNCTION
 - [x] print() (cetak keyword)
 - [ ] input()
 - [ ] len()
 - [ ] type()
 - [ ] Math helper function
 
-⸻
-
-⚠️ RUNTIME & ERROR HANDLING
+# RUNTIME & ERROR HANDLING
 - [ ] RuntimeError class
 - [ ] TypeError handling
 - [ ] Division by zero check
@@ -188,9 +174,7 @@ Program Execution
 - [ ] Call stack trace
 - [ ] Error message with source context
 
-⸻
-
-🧪 TESTING
+# TESTING
 - [ ] Lexer unit test
 - [ ] Parser unit test
 - [ ] AST snapshot test
@@ -199,9 +183,7 @@ Program Execution
 - [ ] Edge case test
 - [x] Basic program examples (4 cebol files)
 
-⸻
-
-🛠️ CLI & TOOLING
+# CLI & TOOLING
 - [x] CLI entry (index.ts dengan Bun)
 - [x] Run file command (bun run index.ts [file])
 - [ ] REPL mode
@@ -210,17 +192,13 @@ Program Execution
 - [ ] Print AST
 - [ ] Pretty AST printer
 
-⸻
-
-📐 LANGUAGE DESIGN
+# LANGUAGE DESIGN
 - [ ] Grammar documentation
 - [ ] EBNF specification
 - [x] Language keyword list (constants.ts)
 - [x] Operator precedence table (sebagian)
 
-⸻
-
-🚀 ADVANCED (OPSIONAL)
+# ADVANCED (OPSIONAL)
 - [ ] Static type checker
 - [ ] Type inference sederhana
 - [ ] Constant folding
@@ -230,17 +208,13 @@ Program Execution
 - [ ] WASM target
 - [ ] Performance benchmark
 
-⸻
-
-📄 DOCUMENTATION
+# DOCUMENTATION
 - [x] README
 - [ ] Language reference
 - [x] Example programs (4 files)
 - [ ] Contribution guide
 
-⸻
-
-🐛 KNOWN ISSUES & BUGS
+# KNOWN ISSUES & BUGS
 - [ ] Line/column tracking tidak berfungsi proper (TODO di lexer.ts:22)
 - [ ] String interpolation tidak berfungsi (cetak("Angka x adalah", x) cetak terpisah)
 - [ ] Boolean literals (true/false) tidak diimplement
@@ -251,9 +225,7 @@ Program Execution
 - [ ] Multi-line comments tidak didukung
 - [ ] String escape sequences tidak didukung
 
-⸻
-
-🔥 NEXT PRIORITY TASKS
+# NEXT PRIORITY TASKS
 1. **Fix line/column tracking** - Implement proper error reporting
 2. **Implement comparison operators** - Tambahkan parser dan interpreter support
 3. **Fix conditional statements** - Implementasi if/jika statement parsing
