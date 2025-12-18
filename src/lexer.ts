@@ -6,6 +6,11 @@ import {
 	IDENTIFIER_CHARS,
 	KEYWORDS,
 	OPERATORS,
+	PUNCTUATION_COLON,
+	PUNCTUATION_LBRACE,
+	PUNCTUATION_LPARENTHESES,
+	PUNCTUATION_RBRACE,
+	PUNCTUATION_RPARENTHESES,
 	PUNCTUATIONS,
 	STRING_DELIMITER,
 	WHITESPACE_CHARS_SINGLE,
@@ -130,7 +135,7 @@ export class CebolLexer implements CebolLexerInterface {
 
 			if (PUNCTUATIONS.includes(this.currentChar)) {
 				const punctuation = this.currentChar;
-				if (punctuation === "{") {
+				if (punctuation === PUNCTUATION_LBRACE) {
 					this.advance();
 					return new CebolToken(
 						CebolLexicalTokenEnum.LBRACE,
@@ -138,7 +143,7 @@ export class CebolLexer implements CebolLexerInterface {
 						0,
 						0,
 					);
-				} else if (punctuation === "}") {
+				} else if (punctuation === PUNCTUATION_RBRACE) {
 					this.advance();
 					return new CebolToken(
 						CebolLexicalTokenEnum.RBRACE,
@@ -146,7 +151,7 @@ export class CebolLexer implements CebolLexerInterface {
 						0,
 						0,
 					);
-				} else if (punctuation === "(") {
+				} else if (punctuation === PUNCTUATION_LPARENTHESES) {
 					this.advance();
 					return new CebolToken(
 						CebolLexicalTokenEnum.LPARENTHESES,
@@ -154,7 +159,7 @@ export class CebolLexer implements CebolLexerInterface {
 						0,
 						0,
 					);
-				} else if (punctuation === ")") {
+				} else if (punctuation === PUNCTUATION_RPARENTHESES) {
 					this.advance();
 					return new CebolToken(
 						CebolLexicalTokenEnum.RPARENTHESES,
@@ -162,6 +167,15 @@ export class CebolLexer implements CebolLexerInterface {
 						0,
 						0,
 					);
+				} else if (punctuation === PUNCTUATION_COLON) {
+					this.advance()
+
+					return new CebolToken(
+						CebolLexicalTokenEnum.COLON,
+						punctuation,
+						0,
+						0,
+					)
 				} else {
 					this.advance();
 					return new CebolToken(
