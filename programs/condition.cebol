@@ -1,0 +1,12 @@
+program cek(x, y) {
+    jika x > 10 maka:
+        cetak("nilai x lebih besar dari 10")
+    jika tidak:
+        cetak("nilai x tidak lebih besar dari 10")
+}
+
+program utama {
+    atur x = 10
+
+    cek(x, y)
+}
