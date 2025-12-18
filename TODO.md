@@ -1,30 +1,30 @@
 # 🧱 LEXER (Lexical Analyzer)
-- [ ] Definisikan enum TokenType
-- [ ] Number
-- [ ] String
+- [x] Definisikan enum TokenType
+- [x] Number
+- [x] String
 - [ ] Boolean
-- [ ] Identifier
-- [ ] Keyword
-- [ ] Operator
-- [ ] Punctuation
-- [ ] EOF
-- [ ] Buat interface Token
-- [ ] type
-- [ ] value
-- [ ] line
-- [ ] column
-- [ ] Implementasi reader karakter (peek, advance)
-- [ ] Skip whitespace
-- [ ] Handle newline & update line/column
-- [ ] Parsing number literal
-- [ ] Parsing identifier
-- [ ] Keyword recognition (let, print, if, dll)
-- [ ] Operator recognition (+ - * / = == != < >)
-- [ ] Punctuation recognition (; , ( ) { })
-- [ ] Error invalid character
-- [ ] Support komentar satu baris (//)
+- [x] Identifier
+- [x] Keyword
+- [x] Operator
+- [x] Punctuation
+- [x] EOF
+- [x] Buat interface Token
+- [x] type
+- [x] value
+- [x] line
+- [x] column (sebagian - TODO: implement line and column tracking di lexer.ts:22)
+- [x] Implementasi reader karakter (peek, advance)
+- [x] Skip whitespace
+- [x] Handle newline & update line/column
+- [x] Parsing number literal
+- [x] Parsing identifier
+- [x] Keyword recognition (let, print, if, dll)
+- [x] Operator recognition (+ - * / = == != < >)
+- [x] Punctuation recognition (; , ( ) { })
+- [x] Error invalid character
+- [x] Support komentar satu baris (#)
 - [ ] Support komentar multi baris (/* */)
-- [ ] Support string literal ("...")
+- [x] Support string literal ("...")
 - [ ] Escape sequence string (\n, \t, \")
 - [ ] Lexer unit test
 
@@ -33,119 +33,137 @@
 🌳 PARSER (Syntax Analyzer)
 
 Core Parser
-- [ ] Parser class
-- [ ] Consume token
-- [ ] Peek token
-- [ ] Expect token (error jika tidak cocok)
-- [ ] EOF handling
+- [x] Parser class
+- [x] Consume token (eat method)
+- [x] Peek token (current_token)
+- [x] Expect token (error jika tidak cocok)
+- [x] EOF handling
 
 Expression Grammar
-- [ ] Parse expression
+- [x] Parse expression (expr method)
 - [ ] Parse equality (==, !=)
 - [ ] Parse comparison (<, >, <=, >=)
-- [ ] Parse term (+, -)
-- [ ] Parse factor (*, /)
+- [x] Parse term (+, -)
+- [x] Parse factor (*, /)
 - [ ] Parse unary (!, -)
-- [ ] Parse primary
+- [x] Parse primary
 - [ ] Parentheses expression
-- [ ] Operator precedence
+- [x] Operator precedence (sebagian - hanya +, -, *, /)
 - [ ] Associativity rules
 
 Statement Grammar
-- [ ] Expression statement
-- [ ] Variable declaration (let)
-- [ ] Assignment statement
-- [ ] Print statement
-- [ ] Block statement { }
+- [x] Expression statement
+- [ ] Variable declaration (let) - ADA ATUR keyword
+- [x] Assignment statement (CebolAssignNode)
+- [x] Print statement (CebolPrintNode)
+- [x] Block statement { }
 - [ ] Empty statement (;)
 
 Control Flow
-- [ ] If statement
+- [ ] If statement (syntax ada di condition.cebol tapi belum diimplement)
 - [ ] Else clause
 - [ ] While loop
 - [ ] For loop
 
+Advanced Statements
+- [x] Program definition (CebolProgramStatement)
+- [x] Program parameters
+- [x] Program body parsing
+- [ ] Program calls/invocation
+
 Error Handling
-- [ ] Syntax error class
+- [x] Syntax error class (basic Error)
 - [ ] Error recovery
 - [ ] Line & column error reporting
-- [ ] Unexpected token message
+- [x] Unexpected token message
 
 ⸻
 
 🌲 AST (Abstract Syntax Tree)
 
 Base
-- [ ] ASTNode base interface
-- [ ] ExpressionNode base
-- [ ] StatementNode base
+- [x] ASTNode base interface (CebolBaseNodeInterface)
+- [x] ExpressionNode base (melalui CebolASTNode type)
+- [x] StatementNode base
 
 Literal Nodes
-- [ ] NumberLiteralNode
-- [ ] StringLiteralNode
+- [x] NumberLiteralNode (CebolNumberNode)
+- [x] StringLiteralNode (CebolStringNode)
 - [ ] BooleanLiteralNode
 
 Expression Nodes
-- [ ] IdentifierNode
-- [ ] BinaryExpressionNode
+- [ ] IdentifierNode (CebolStringNode dipakai sebagai identifier)
+- [x] BinaryExpressionNode (CebolBinaryOpNode)
 - [ ] UnaryExpressionNode
-- [ ] AssignmentExpressionNode
+- [x] AssignmentExpressionNode (CebolAssignNode)
 - [ ] CallExpressionNode
 
 Statement Nodes
-- [ ] VariableDeclarationNode
-- [ ] ExpressionStatementNode
-- [ ] PrintStatementNode
-- [ ] BlockStatementNode
+- [ ] VariableDeclarationNode (menggunakan assignment + keyword)
+- [x] ExpressionStatementNode
+- [x] PrintStatementNode (CebolPrintNode)
+- [x] BlockStatementNode (dalam CebolProgramNode)
 - [ ] IfStatementNode
 - [ ] WhileStatementNode
 - [ ] ForStatementNode
 - [ ] ReturnStatementNode
+
+Program Nodes
+- [x] ProgramDefinitionNode (CebolProgramNode)
+- [x] Program parameters
+- [x] Program body
 
 ⸻
 
 🧠 INTERPRETER / EVALUATOR
 
 Core Interpreter
-- [ ] Interpreter class
-- [ ] Visitor pattern implementation
-- [ ] Evaluate expression
-- [ ] Execute statement
-- [ ] Program entry execution
+- [x] Interpreter class (CebolInterpreter)
+- [x] Visitor pattern implementation (visit method)
+- [x] Evaluate expression
+- [x] Execute statement
+- [x] Program entry execution
 
 Expression Evaluation
-- [ ] Number arithmetic
-- [ ] String concatenation
+- [x] Number arithmetic
+- [x] String concatenation (sebagian)
 - [ ] Boolean logic
 - [ ] Comparison evaluation
 - [ ] Unary operation evaluation
 
 Statement Execution
-- [ ] Variable declaration execution
-- [ ] Assignment execution
-- [ ] Print execution
-- [ ] Block execution
+- [x] Variable declaration execution (melalui assignment)
+- [x] Assignment execution
+- [x] Print execution
+- [x] Block execution (dalam program)
 - [ ] Control flow execution
+
+Program Execution
+- [x] Program definition execution
+- [ ] Program parameter passing
+- [ ] Program call/invocation
+- [ ] Program return values
+- [ ] Recursive program support
 
 ⸻
 
 🌍 ENVIRONMENT & SCOPE
-- [ ] Environment class
-- [ ] Variable define
-- [ ] Variable get
-- [ ] Variable update
+- [x] Environment class (globals object)
+- [x] Variable define (melalui assignment)
+- [x] Variable get (dari globals)
+- [x] Variable update
 - [ ] Nested environment
 - [ ] Scope enter
 - [ ] Scope exit
 - [ ] Variable shadowing
-- [ ] Undefined variable error
+- [x] Undefined variable error (fallback to string value)
 
 ⸻
 
 🔧 FUNCTION SUPPORT
-- [ ] FunctionDeclarationNode
+- [x] FunctionDeclarationNode (CebolProgramNode)
 - [ ] FunctionCallNode
-- [ ] Parameter parsing
+- [x] Parameter parsing (dalam program statement)
 - [ ] Argument evaluation
 - [ ] Local function scope
 - [ ] Return value handling
@@ -154,7 +172,7 @@ Statement Execution
 ⸻
 
 📦 BUILT-IN FUNCTION
-- [ ] print()
+- [x] print() (cetak keyword)
 - [ ] input()
 - [ ] len()
 - [ ] type()
@@ -166,7 +184,7 @@ Statement Execution
 - [ ] RuntimeError class
 - [ ] TypeError handling
 - [ ] Division by zero check
-- [ ] Invalid operation error
+- [x] Invalid operation error (basic Error)
 - [ ] Call stack trace
 - [ ] Error message with source context
 
@@ -179,14 +197,15 @@ Statement Execution
 - [ ] Interpreter test
 - [ ] Invalid program test
 - [ ] Edge case test
+- [x] Basic program examples (4 cebol files)
 
 ⸻
 
 🛠️ CLI & TOOLING
-- [ ] CLI entry (cebol)
-- [ ] Run file command
+- [x] CLI entry (index.ts dengan Bun)
+- [x] Run file command (bun run index.ts [file])
 - [ ] REPL mode
-- [ ] Debug flag
+- [x] Debug flag (logger)
 - [ ] Print token list
 - [ ] Print AST
 - [ ] Pretty AST printer
@@ -196,8 +215,8 @@ Statement Execution
 📐 LANGUAGE DESIGN
 - [ ] Grammar documentation
 - [ ] EBNF specification
-- [ ] Language keyword list
-- [ ] Operator precedence table
+- [x] Language keyword list (constants.ts)
+- [x] Operator precedence table (sebagian)
 
 ⸻
 
@@ -214,7 +233,30 @@ Statement Execution
 ⸻
 
 📄 DOCUMENTATION
-- [ ] README
+- [x] README
 - [ ] Language reference
-- [ ] Example programs
+- [x] Example programs (4 files)
 - [ ] Contribution guide
+
+⸻
+
+🐛 KNOWN ISSUES & BUGS
+- [ ] Line/column tracking tidak berfungsi proper (TODO di lexer.ts:22)
+- [ ] String interpolation tidak berfungsi (cetak("Angka x adalah", x) cetak terpisah)
+- [ ] Boolean literals (true/false) tidak diimplement
+- [ ] Comparison operators tidak berfungsi (==, !=, <, >, <=, >=)
+- [ ] Conditional statements (jika/jika tidak) syntax ada tapi tidak diimplement parser
+- [ ] Function calls tidak diimplement interpreter
+- [ ] Type keywords (angka/teks) diabaikan
+- [ ] Multi-line comments tidak didukung
+- [ ] String escape sequences tidak didukung
+
+⸻
+
+🔥 NEXT PRIORITY TASKS
+1. **Fix line/column tracking** - Implement proper error reporting
+2. **Implement comparison operators** - Tambahkan parser dan interpreter support
+3. **Fix conditional statements** - Implementasi if/jika statement parsing
+4. **Implement boolean literals** - Tambahkan true/false support
+5. **Fix function calls** - Implementasi program invocation
+6. **Add string escape sequences** - Support \n, \t, \" dalam strings
