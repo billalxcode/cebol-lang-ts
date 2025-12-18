@@ -3,10 +3,11 @@
 
 Menurut KBBI, kata **Cebol** yaitu:
 > cebol/ce·bol/ /cébol/ a pendek sekali (tentang tubuh); katai;si -- hendak mencapai bulan (bintang), pb menghendaki sesuatu yang mustahil tercapai
+
 Berdasarkan nama nya tersebut, maka nama proyek ini memiliki arti tujuan yaitu:
 > Menjadi bahasa pemrograman kecil dan sederhana untuk memahami konsep inti interpreter.
 
-Bahasa ini hanya sebatas memahami konsep sederhana dari interpreter dan mustahil untuk mencapai kesempurnaan.
+> Bahasa ini hanya sebatas memahami konsep sederhana dari interpreter dan mustahil untuk mencapai kesempurnaan.
 
 Project ini berfokus pada:
 - Lexical Analysis (Lexer)
