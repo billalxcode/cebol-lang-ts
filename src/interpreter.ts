@@ -13,6 +13,7 @@ export class CebolInterpreter {
 		this.globals = {};
 	}
 
+	// biome-ignore lint: disable any type usage temporarily
 	public visit(node: CebolASTNode): any {
 		if (node instanceof CebolNumberNode) return node.value;
 		if (node instanceof CebolStringNode)
@@ -51,6 +52,7 @@ export class CebolInterpreter {
 		}
 	}
 
+	// biome-ignore lint: disable any type usage temporarily
 	public interpret(ast: CebolASTNode[]): any {
 		for (const node of ast) {
 			this.visit(node);
