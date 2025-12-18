@@ -13,7 +13,7 @@ export class CebolNumberNode implements CebolNumberNodeInterface {
 			value: this.value,
 		};
 	}
-	
+
 	public toString(): string {
 		return `CebolNumberNode(${this.value})`;
 	}

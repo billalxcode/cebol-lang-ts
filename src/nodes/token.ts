@@ -27,7 +27,7 @@ export class CebolToken implements CebolTokenInterface {
 			column: this.column,
 		};
 	}
-	
+
 	public toString(): string {
 		return `CebolToken(${this.type}, "${this.value}", ${this.line}, ${this.column})`;
 	}

@@ -101,7 +101,4 @@ export const PUNCTUATIONS = [
 	PUNCTUATION_COLON,
 ];
 
-export const TYPES_DATA = [
-    TYPE_NUMBER,
-    TYPE_STRING,
-]
+export const TYPES_DATA = [TYPE_NUMBER, TYPE_STRING];

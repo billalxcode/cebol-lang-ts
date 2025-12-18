@@ -168,14 +168,9 @@ export class CebolLexer implements CebolLexerInterface {
 						0,
 					);
 				} else if (punctuation === PUNCTUATION_COLON) {
-					this.advance()
+					this.advance();
 
-					return new CebolToken(
-						CebolLexicalTokenEnum.COLON,
-						punctuation,
-						0,
-						0,
-					)
+					return new CebolToken(CebolLexicalTokenEnum.COLON, punctuation, 0, 0);
 				} else {
 					this.advance();
 					return new CebolToken(

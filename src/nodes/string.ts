@@ -13,7 +13,7 @@ export class CebolStringNode implements CebolStringNodeInterface {
 			value: this.value,
 		};
 	}
-	
+
 	public toString(): string {
 		return `CebolStringNode("${this.value}")`;
 	}

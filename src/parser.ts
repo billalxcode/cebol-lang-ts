@@ -5,26 +5,30 @@ import { CebolStringNode } from "./nodes/string";
 import type { CebolASTNode, CebolTokenInterface } from "./nodes/types";
 import { CebolLexicalTokenEnum } from "./nodes/types";
 import { CebolStatementManager } from "./statements/manager";
-import type { CebolBasicStatementInterface, CebolLexerInterface, CebolParserInterface } from "./types/nodes";
+import type {
+	CebolBasicStatementInterface,
+	CebolLexerInterface,
+	CebolParserInterface,
+} from "./types/nodes";
 
 export class CebolParser implements CebolParserInterface {
 	public lexer: CebolLexerInterface;
 	public current_token: CebolTokenInterface;
 
-	private state_manager: CebolBasicStatementInterface
+	private state_manager: CebolBasicStatementInterface;
 
 	constructor(_lexer: CebolLexerInterface) {
 		this.lexer = _lexer;
 
 		this.current_token = this.lexer.getNextToken();
 
-		this.state_manager = new CebolStatementManager(this)
+		this.state_manager = new CebolStatementManager(this);
 	}
 
 	public eat(tokenType: CebolLexicalTokenEnum): void {
 		logger.info(
 			`Eating token: expected ${tokenType}, got ${this.current_token.type}`,
-		)
+		);
 		logger.info(`Current token value: "${this.current_token.value}"`);
 		if (this.current_token.type === tokenType) {
 			this.current_token = this.lexer.getNextToken();
@@ -75,11 +79,13 @@ export class CebolParser implements CebolParserInterface {
 			const token = this.current_token;
 			this.eat(CebolLexicalTokenEnum.OPERATOR);
 
-			const left = node
-			const operator = token
-			const right = this.factor()
+			const left = node;
+			const operator = token;
+			const right = this.factor();
 
-			logger.info(`Creating binary operation node: ${left.toString()} ${operator.value} ${right.toString()}`);
+			logger.info(
+				`Creating binary operation node: ${left.toString()} ${operator.value} ${right.toString()}`,
+			);
 			node = new CebolBinaryOpNode(left, operator, right);
 		}
 
@@ -116,7 +122,7 @@ export class CebolParser implements CebolParserInterface {
 		}
 
 		// Write parsed nodes to nodes.json for debugging
-		const nodesData = nodes.map(node => node.toObject());
+		const nodesData = nodes.map((node) => node.toObject());
 		Bun.write("nodes.json", JSON.stringify(nodesData, null, 4));
 
 		logger.info(`Wrote ${nodes.length} nodes to nodes.json`);
