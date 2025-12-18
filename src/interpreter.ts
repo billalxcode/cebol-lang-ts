@@ -44,7 +44,7 @@ export class CebolInterpreter {
 			return value;
 		}
 		if (node instanceof CebolProgramNode) {
-			for (const stmt of node.body) {
+			for (const stmt of node.bodies) {
 				this.visit(stmt);
 			}
 			return null;
