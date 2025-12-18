@@ -40,3 +40,5 @@ Cebol **tidak bertujuan menggantikan bahasa lain**, tetapi sebagai media pembela
 ## Contoh Kode Cebol
 Contoh kode Cebol bisa cek pada [folder programs](programs/)
 
+## TODO
+TODO untuk proyek Cobol bisa cek pada [TODO](TODO.md)
