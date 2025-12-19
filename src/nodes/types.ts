@@ -17,6 +17,19 @@ export enum CebolLexicalTokenEnum {
 	EOF = "EOF",
 }
 
+export enum CebolNodeNameEnum {
+	NUMBER_NODE = "CebolNumberNode",
+	STRING_NODE = "CebolStringNode",
+	BINARY_OP_NODE = "CebolBinaryOpNode",
+	ASSIGN_NODE = "CebolAssignNode",
+	PRINT_NODE = "CebolPrintNode",
+	PROGRAM_NODE = "CebolProgramNode",
+	CONDITION_NODE = "CebolConditionNode",
+	VARIABLE_NODE = "CebolVariableNode",
+	MATH_NODE = "CebolMathNode",
+	TOKEN_NODE = "CebolToken",
+}
+
 export interface CebolBaseNodeInterface {
 	name: string;
 	toObject(): object;

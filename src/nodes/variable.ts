@@ -1,11 +1,12 @@
-import type {
-	CebolASTNode,
-	CebolLexicalTokenEnum,
-	CebolVariableNodeInterface,
+import {
+	CebolNodeNameEnum,
+	type CebolASTNode,
+	type CebolLexicalTokenEnum,
+	type CebolVariableNodeInterface,
 } from "./types";
 
 export class CebolVariableNode implements CebolVariableNodeInterface {
-	public name = "CebolVariableNode";
+	public name = CebolNodeNameEnum.VARIABLE_NODE;
 	public readonly varName: string;
 	public readonly varType:
 		| CebolLexicalTokenEnum.NUMBER

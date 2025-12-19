@@ -1,7 +1,7 @@
-import type { CebolLexicalTokenEnum, CebolTokenInterface } from "@/nodes/types";
+import { CebolNodeNameEnum, type CebolLexicalTokenEnum, type CebolTokenInterface } from "@/nodes/types";
 
 export class CebolToken implements CebolTokenInterface {
-	public name = "CebolToken";
+	public name = CebolNodeNameEnum.TOKEN_NODE;
 	public readonly type: CebolLexicalTokenEnum;
 	public readonly value: string;
 	public readonly line: number;

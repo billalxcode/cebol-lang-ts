@@ -1,11 +1,12 @@
-import type {
-	CebolASTNode,
-	CebolBaseNodeInterface,
-	CebolPrintNodeInterface,
+import {
+	CebolNodeNameEnum,
+	type CebolASTNode,
+	type CebolBaseNodeInterface,
+	type CebolPrintNodeInterface,
 } from "@/nodes/types";
 
 export class CebolPrintNode implements CebolPrintNodeInterface {
-	public name = "CebolPrintNode";
+	public name = CebolNodeNameEnum.PRINT_NODE;
 	public readonly expressions: CebolBaseNodeInterface[];
 	public readonly variables: CebolASTNode[] = [];
 

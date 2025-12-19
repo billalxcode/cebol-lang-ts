@@ -1,10 +1,11 @@
-import type {
-	CebolBaseNodeInterface,
-	CebolBinaryOpNodeInterface,
+import {
+	CebolNodeNameEnum,
+	type CebolBaseNodeInterface,
+	type CebolBinaryOpNodeInterface,
 } from "@/nodes/types";
 
 export class CebolBinaryOpNode implements CebolBinaryOpNodeInterface {
-	public name = "CebolBinaryOpNode";
+	public name = CebolNodeNameEnum.BINARY_OP_NODE;
 	public readonly left: CebolBaseNodeInterface;
 	public readonly operator: CebolBaseNodeInterface;
 	public readonly right: CebolBaseNodeInterface;

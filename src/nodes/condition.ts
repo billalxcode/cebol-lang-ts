@@ -1,10 +1,11 @@
-import type {
-	CebolBaseNodeInterface,
-	CebolConditionNodeInterface,
+import {
+	CebolNodeNameEnum,
+	type CebolBaseNodeInterface,
+	type CebolConditionNodeInterface,
 } from "./types";
 
 export class CebolConditionNode implements CebolConditionNodeInterface {
-	public name = "CebolConditionNode";
+	public name = CebolNodeNameEnum.CONDITION_NODE;
 	public readonly condition: CebolBaseNodeInterface;
 	public readonly trueBranch: CebolBaseNodeInterface[];
 	public readonly falseBranch: CebolBaseNodeInterface[] | null;

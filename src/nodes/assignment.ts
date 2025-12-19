@@ -1,10 +1,11 @@
-import type {
-	CebolAssignNodeInterface,
-	CebolBaseNodeInterface,
+import {
+	CebolNodeNameEnum,
+	type CebolAssignNodeInterface,
+	type CebolBaseNodeInterface,
 } from "@/nodes/types";
 
 export class CebolAssignNode implements CebolAssignNodeInterface {
-	public name = "CebolAssignNode";
+	public name = CebolNodeNameEnum.ASSIGN_NODE;
 
 	public readonly variable: CebolBaseNodeInterface;
 	public readonly value: CebolBaseNodeInterface;

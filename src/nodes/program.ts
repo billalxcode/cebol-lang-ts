@@ -1,10 +1,11 @@
-import type {
-	CebolBaseNodeInterface,
-	CebolProgramNodeInterface,
+import {
+	CebolNodeNameEnum,
+	type CebolBaseNodeInterface,
+	type CebolProgramNodeInterface,
 } from "@/nodes/types";
 
 export class CebolProgramNode implements CebolProgramNodeInterface {
-	public name = "CebolProgramNode";
+	public name = CebolNodeNameEnum.PROGRAM_NODE;
 	public readonly programName: string;
 	public readonly bodies: CebolBaseNodeInterface[];
 	public readonly params: string[] = [];
