@@ -18,6 +18,7 @@ export enum CebolLexicalTokenEnum {
 }
 
 export interface CebolBaseNodeInterface {
+	name: string;
 	toObject(): object;
 	toString(): string;
 }
@@ -65,9 +66,13 @@ export interface CebolTokenInterface extends CebolBaseNodeInterface {
 }
 
 export interface CebolVariableNodeInterface extends CebolBaseNodeInterface {
-	readonly name: string;
+	readonly varName: string;
 	readonly varType: CebolLexicalTokenEnum.NUMBER | CebolLexicalTokenEnum.STRING;
 	readonly value: CebolASTNode;
+}
+
+export interface CebolMathNodeInterface extends CebolBaseNodeInterface {
+	readonly expression: string;
 }
 
 export type CebolASTNode =

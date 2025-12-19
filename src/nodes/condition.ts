@@ -4,6 +4,7 @@ import type {
 } from "./types";
 
 export class CebolConditionNode implements CebolConditionNodeInterface {
+	public name = "CebolConditionNode";
 	public readonly condition: CebolBaseNodeInterface;
 	public readonly trueBranch: CebolBaseNodeInterface[];
 	public readonly falseBranch: CebolBaseNodeInterface[] | null;
@@ -20,7 +21,7 @@ export class CebolConditionNode implements CebolConditionNodeInterface {
 
 	public toObject(): object {
 		return {
-			type: "CebolConditionNode",
+			name: this.name,
 			condition: this.condition.toObject(),
 			trueBranch: this.trueBranch.map((node) => node.toObject()),
 			falseBranch: this.falseBranch
@@ -30,7 +31,7 @@ export class CebolConditionNode implements CebolConditionNodeInterface {
 	}
 
 	public toString(): string {
-		return `CebolConditionNode(${this.condition.toString()}, [${this.trueBranch
+		return `${this.name}(${this.condition.toString()}, [${this.trueBranch
 			.map((node) => node.toString())
 			.join(
 				", ",

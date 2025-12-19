@@ -1,6 +1,7 @@
 import type { CebolStringNodeInterface } from "@/nodes/types";
 
 export class CebolStringNode implements CebolStringNodeInterface {
+	public name = "CebolStringNode";
 	public readonly value: string;
 
 	constructor(_value: string) {
@@ -9,12 +10,12 @@ export class CebolStringNode implements CebolStringNodeInterface {
 
 	public toObject(): object {
 		return {
-			type: "CebolStringNode",
+			name: this.name,
 			value: this.value,
 		};
 	}
 
 	public toString(): string {
-		return `CebolStringNode("${this.value}")`;
+		return `${this.name}("${this.value}")`;
 	}
 }

@@ -5,6 +5,7 @@ import type {
 } from "@/nodes/types";
 
 export class CebolPrintNode implements CebolPrintNodeInterface {
+	public name = "CebolPrintNode";
 	public readonly expressions: CebolBaseNodeInterface[];
 	public readonly variables: CebolASTNode[] = [];
 
@@ -18,12 +19,12 @@ export class CebolPrintNode implements CebolPrintNodeInterface {
 
 	public toObject(): object {
 		return {
-			type: "CebolPrintNode",
+			name: this.name,
 			expressions: this.expressions.map((expr) => expr.toObject()),
 		};
 	}
 
 	public toString(): string {
-		return `CebolPrintNode(${this.expressions.map((expr) => expr.toString()).join(", ")})`;
+		return `${this.name}(${this.expressions.map((expr) => expr.toString()).join(", ")})`;
 	}
 }

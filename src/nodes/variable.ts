@@ -5,7 +5,8 @@ import type {
 } from "./types";
 
 export class CebolVariableNode implements CebolVariableNodeInterface {
-	public readonly name: string;
+	public name = "CebolVariableNode";
+	public readonly varName: string;
 	public readonly varType:
 		| CebolLexicalTokenEnum.NUMBER
 		| CebolLexicalTokenEnum.STRING;
@@ -16,21 +17,21 @@ export class CebolVariableNode implements CebolVariableNodeInterface {
 		_varType: CebolLexicalTokenEnum.NUMBER | CebolLexicalTokenEnum.STRING,
 		_value: CebolASTNode,
 	) {
-		this.name = _name;
+		this.varName = _name;
 		this.varType = _varType;
 		this.value = _value;
 	}
 
 	public toObject(): object {
 		return {
-			type: "CebolVariableNode",
 			name: this.name,
+			varName: this.varName,
 			varType: this.varType,
 			value: this.value.toObject(),
 		};
 	}
 
 	public toString(): string {
-		return `CebolVariableNode(name=${this.name}, varType=${this.varType}, value=${this.value.toString()})`;
+		return `${this.name}(varName=${this.varName}, varType=${this.varType}, value=${this.value.toString()})`;
 	}
 }

@@ -4,6 +4,7 @@ import type {
 } from "@/nodes/types";
 
 export class CebolBinaryOpNode implements CebolBinaryOpNodeInterface {
+	public name = "CebolBinaryOpNode";
 	public readonly left: CebolBaseNodeInterface;
 	public readonly operator: CebolBaseNodeInterface;
 	public readonly right: CebolBaseNodeInterface;
@@ -20,7 +21,7 @@ export class CebolBinaryOpNode implements CebolBinaryOpNodeInterface {
 
 	public toObject(): object {
 		return {
-			type: "CebolBinaryOpNode",
+			name: this.name,
 			left: this.left.toObject(),
 			operator: this.operator.toObject(),
 			right: this.right.toObject(),
@@ -28,6 +29,6 @@ export class CebolBinaryOpNode implements CebolBinaryOpNodeInterface {
 	}
 
 	public toString(): string {
-		return `CebolBinaryOpNode(${this.left.toString()}, ${this.operator.toString()}, ${this.right.toString()})`;
+		return `${this.name}(${this.left.toString()}, ${this.operator.toString()}, ${this.right.toString()})`;
 	}
 }

@@ -1,6 +1,7 @@
 import type { CebolLexicalTokenEnum, CebolTokenInterface } from "@/nodes/types";
 
 export class CebolToken implements CebolTokenInterface {
+	public name = "CebolToken";
 	public readonly type: CebolLexicalTokenEnum;
 	public readonly value: string;
 	public readonly line: number;
@@ -20,7 +21,7 @@ export class CebolToken implements CebolTokenInterface {
 
 	public toObject(): object {
 		return {
-			type: "CebolToken",
+			name: this.name,
 			lexicalType: this.type,
 			value: this.value,
 			line: this.line,
@@ -29,6 +30,6 @@ export class CebolToken implements CebolTokenInterface {
 	}
 
 	public toString(): string {
-		return `CebolToken(${this.type}, "${this.value}", ${this.line}, ${this.column})`;
+		return `${this.name}(${this.type}, "${this.value}", ${this.line}, ${this.column})`;
 	}
 }
