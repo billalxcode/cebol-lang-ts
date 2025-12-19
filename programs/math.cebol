@@ -1,0 +1,8 @@
+# cetak(1 + 1) # Cetak hasil penjumlahan 1 + 1 = 2
+# cetak(2 * 2) # Cetak hasil perkalian 2 * 2 = 4
+# cetak(5 - 3) # Cetak hasil pengurangan 5 - 3 = 2
+cetak(8 / 4) # Cetak hasil pembagian 8 / 4 = 2
+# cetak((3 + 5) * 2) # Cetak hasil (3 + 5) * 2 = 16
+cetak(10 % 3) # Cetak hasil modulus 10 % 3 = 1
+cetak(2 ^ 3) # Cetak hasil perpangkatan 2 ^ 3 = 8
+cetak((1 + 2) * (3 + 4)) # Cetak hasil (1 + 2) * (3 + 4) = 21
