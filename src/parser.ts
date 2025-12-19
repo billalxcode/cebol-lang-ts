@@ -1,3 +1,4 @@
+import { isDebug } from "./arguments";
 import { ARITHMETIC_OPERATORS } from "./constants";
 import { logger } from "./logger";
 import { CebolBinaryOpNode } from "./nodes/binary";
@@ -68,31 +69,31 @@ export class CebolParser implements CebolParserInterface {
 		const token = this.current_token;
 		logger.info(`Parsing factor, current token: ${token.toString()}`);
 
-		let factor_node: CebolASTNode
+		let factorNode: CebolASTNode
 
 		switch (token.type) {
 			case CebolLexicalTokenEnum.NUMBER:
 				this.eat(CebolLexicalTokenEnum.NUMBER);
-				factor_node = new CebolNumberNode(Number(token.value));
+				factorNode = new CebolNumberNode(Number(token.value));
 				break;
 			case CebolLexicalTokenEnum.STRING:
 				this.eat(CebolLexicalTokenEnum.STRING);
-				factor_node = new CebolStringNode(token.value);
+				factorNode = new CebolStringNode(token.value);
 				break;
 			case CebolLexicalTokenEnum.IDENTIFIER:
 				this.eat(CebolLexicalTokenEnum.IDENTIFIER);
 				// i dont know what to do here yet haha
-				factor_node = new CebolStringNode(token.value);
+				factorNode = new CebolStringNode(token.value);
 				break;
 			case CebolLexicalTokenEnum.LPARENTHESES:
 				this.eat(CebolLexicalTokenEnum.LPARENTHESES);
-				factor_node = this.expr();
+				factorNode = this.expr();
 				this.eat(CebolLexicalTokenEnum.RPARENTHESES);
 				break;
 			default:
 				throw new Error(`Unexpected token in factor: ${token.toString()}`);
 		}
-		return factor_node
+		return factorNode;
 	}
 
 	public term(): CebolASTNode {
@@ -148,11 +149,13 @@ export class CebolParser implements CebolParserInterface {
 		}
 
 		logger.info(`Parsing complete, total nodes: ${nodes.length}`);
-		// Write parsed nodes to nodes.json for debugging
-		const nodesData = nodes.map((node) => node.toObject());
-		Bun.write("nodes.json", JSON.stringify(nodesData, null, 4));
+		if (isDebug) {
+			// Write parsed nodes to nodes.json for debugging
+			const nodesData = nodes.map((node) => node.toObject());
+			Bun.write("nodes.json", JSON.stringify(nodesData, null, 4));
 
-		logger.info(`Wrote ${nodes.length} nodes to nodes.json`);
+			logger.info(`Wrote ${nodes.length} nodes to nodes.json`);
+		}
 		return nodes;
 	}
 }

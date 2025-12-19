@@ -119,7 +119,7 @@ export class CebolLexer implements CebolLexerInterface {
 				logger.info(`Current char at start of comment: "${this.currentChar}"`);
 				while (
 					this.currentChar !== null &&
-					this.currentChar != BREAKLINE
+					this.currentChar !== BREAKLINE
 				) {
 					logger.info(`Skipping char in comment: "${this.currentChar}"`);
 					this.advance();

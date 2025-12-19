@@ -39,9 +39,9 @@ export class CebolPrintStatement implements CebolBasicStatementInterface {
 				`Last token in print statement parsing: ${last_token.toString()}`,
 			);
 			if (this.parent.can_expr) {
-			    const exprNode = this.parent.expr();
+				const exprNode = this.parent.expr();
 				logger.info(`Expression node parsed in print statement: ${exprNode.toString()}`);
-			    bodies.push(exprNode);
+				bodies.push(exprNode);
 			} else {
 				bodies.push(this.current_token);
 				this.eat(this.current_token.type);

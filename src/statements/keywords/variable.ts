@@ -52,7 +52,7 @@ export class CebolVariableStatement implements CebolBasicStatementInterface {
 			last_token.type === CebolLexicalTokenEnum.NUMBER ||
 			last_token.type === CebolLexicalTokenEnum.STRING
 		) {
-			const expr = this.parent.expr()
+			const expr = this.parent.expr();
 
 			logger.info(`Variable value expression: ${expr.toString()}`);
 

@@ -31,41 +31,47 @@ export class CebolInterpreter {
 				const left = this.visit(binaryOpNode.left as CebolASTNode);
 				const right = this.visit(binaryOpNode.right as CebolASTNode);
 
-				const operator = binaryOpNode.operator as CebolTokenInterface
+				const operator = binaryOpNode.operator as CebolTokenInterface;
 
 				let output
 				switch (operator.value) {
 					case OPERATOR_PLUS:
 						output = left + right;
-						break
+						break;
 					case OPERATOR_MINUS:
 						output = left - right;
-						break
+						break;
 					case OPERATOR_MULTIPLY:
 						output = left * right;
-						break
+						break;
 					case OPERATOR_DIVIDE:
 						output = left / right;
-						break
+						break;
 					case OPERATOR_MODULO:
 						output = left % right;
-						break
+						break;
 					case OPERATOR_POWER:
 						output = Math.pow(left, right);
-						break
+						break;
 					default:
 						throw new Error(`Unknown operator: ${operator.value}`);
 				}
 				return output
 			case CebolNodeNameEnum.ASSIGN_NODE:
 				const assignNode = node as CebolAssignNode;
+				if (!assignNode.value || typeof assignNode.value.name !== "string") {
+					throw new Error(`Invalid assignment value`);
+				}
 				const value = this.visit(assignNode.value as CebolASTNode);
 				const variableNode = assignNode.variable as CebolVariableNode;
 				this.globals[variableNode.value.name] = value;
 				return value
 			case CebolNodeNameEnum.VARIABLE_NODE:
 				const variableNodeLookup = node as CebolVariableNode;
-				const varName = variableNodeLookup.value.name;
+				if (!variableNodeLookup.value || typeof variableNodeLookup.value.name !== "string") {
+					throw new Error(`Invalid variable reference`);
+				}
+				const varName = variableNodeLookup.varName;
 				if (this.globals.hasOwnProperty(varName)) {
 					return this.globals[varName];
 				} else {
