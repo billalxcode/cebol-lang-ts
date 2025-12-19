@@ -24,7 +24,7 @@ try {
 	interpreter.interpret(ast);
 } catch (error) {
 	if (error instanceof Error) {
-		logger.error(`Error during parsing: ${error.message}`);
+		logger.error(`RuntimeError: ${error.message}`);
 		process.exit(1);
 	}
 }
