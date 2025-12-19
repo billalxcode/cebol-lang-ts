@@ -1,3 +1,4 @@
+import { ARITHMETIC_OPERATORS } from "./constants";
 import { logger } from "./logger";
 import { CebolBinaryOpNode } from "./nodes/binary";
 import { CebolNumberNode } from "./nodes/number";
@@ -55,18 +56,43 @@ export class CebolParser implements CebolParserInterface {
 		return this.can_term;
 	}
 
+	public get valid_arithmetic_operator(): boolean {
+		const token = this.current_token;
+		return (
+			token.type === CebolLexicalTokenEnum.OPERATOR &&
+			ARITHMETIC_OPERATORS.includes(token.value)
+		);
+	}
+
 	public factor(): CebolASTNode {
 		const token = this.current_token;
 		logger.info(`Parsing factor, current token: ${token.toString()}`);
-		if (token.type === CebolLexicalTokenEnum.NUMBER) {
-			this.eat(CebolLexicalTokenEnum.NUMBER);
-			return new CebolNumberNode(Number(token.value));
-		} else if (token.type === CebolLexicalTokenEnum.STRING) {
-			this.eat(CebolLexicalTokenEnum.STRING);
-			return new CebolStringNode(token.value);
-		} else {
-			throw new Error(`Unexpected token in factor: ${token.toString()}`);
+
+		let factor_node: CebolASTNode
+
+		switch (token.type) {
+			case CebolLexicalTokenEnum.NUMBER:
+				this.eat(CebolLexicalTokenEnum.NUMBER);
+				factor_node = new CebolNumberNode(Number(token.value));
+				break;
+			case CebolLexicalTokenEnum.STRING:
+				this.eat(CebolLexicalTokenEnum.STRING);
+				factor_node = new CebolStringNode(token.value);
+				break;
+			case CebolLexicalTokenEnum.IDENTIFIER:
+				this.eat(CebolLexicalTokenEnum.IDENTIFIER);
+				// i dont know what to do here yet haha
+				factor_node = new CebolStringNode(token.value);
+				break;
+			case CebolLexicalTokenEnum.LPARENTHESES:
+				this.eat(CebolLexicalTokenEnum.LPARENTHESES);
+				factor_node = this.expr();
+				this.eat(CebolLexicalTokenEnum.RPARENTHESES);
+				break;
+			default:
+				throw new Error(`Unexpected token in factor: ${token.toString()}`);
 		}
+		return factor_node
 	}
 
 	public term(): CebolASTNode {
@@ -79,9 +105,9 @@ export class CebolParser implements CebolParserInterface {
 			const token = this.current_token;
 			this.eat(CebolLexicalTokenEnum.OPERATOR);
 
-			const left = node;
-			const operator = token;
-			const right = this.factor();
+			const left = node
+			const operator = token
+			const right = this.factor()
 
 			logger.info(
 				`Creating binary operation node: ${left.toString()} ${operator.value} ${right.toString()}`,
@@ -97,7 +123,7 @@ export class CebolParser implements CebolParserInterface {
 
 		while (
 			this.current_token.type === CebolLexicalTokenEnum.OPERATOR &&
-			(this.current_token.value === "+" || this.current_token.value === "-")
+			this.valid_arithmetic_operator
 		) {
 			const token = this.current_token;
 			this.eat(CebolLexicalTokenEnum.OPERATOR);
@@ -121,6 +147,7 @@ export class CebolParser implements CebolParserInterface {
 			nodes.push(node);
 		}
 
+		logger.info(`Parsing complete, total nodes: ${nodes.length}`);
 		// Write parsed nodes to nodes.json for debugging
 		const nodesData = nodes.map((node) => node.toObject());
 		Bun.write("nodes.json", JSON.stringify(nodesData, null, 4));

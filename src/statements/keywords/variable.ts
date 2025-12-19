@@ -52,12 +52,14 @@ export class CebolVariableStatement implements CebolBasicStatementInterface {
 			last_token.type === CebolLexicalTokenEnum.NUMBER ||
 			last_token.type === CebolLexicalTokenEnum.STRING
 		) {
-			this.eat(last_token.type);
+			const expr = this.parent.expr()
+
+			logger.info(`Variable value expression: ${expr.toString()}`);
 
 			return new CebolVariableNode(
 				varNameToken.value,
 				last_token.type,
-				last_token,
+				expr,
 			);
 		} else {
 			throw new Error(`Invalid variable value type: ${last_token.toString()}`);

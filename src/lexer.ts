@@ -1,4 +1,5 @@
 import {
+	ARITHMETIC_OPERATORS,
 	BREAKLINE,
 	COMMENT_START,
 	DIGITS,
@@ -17,6 +18,7 @@ import {
 } from "@/constants";
 import { CebolToken } from "@/nodes/token";
 import { CebolLexicalTokenEnum, type CebolTokenInterface } from "@/nodes/types";
+import { logger } from "./logger";
 import type { CebolLexerInterface } from "./types/nodes";
 
 export class CebolLexer implements CebolLexerInterface {
@@ -56,11 +58,10 @@ export class CebolLexer implements CebolLexerInterface {
 		}
 	}
 
-	public skipWhitespaceAndComments(): void {
+	public skipWhitespace(): void {
 		while (
 			this.currentChar !== null &&
-			(WHITESPACE_CHARS_SINGLE.includes(this.currentChar) ||
-				this.currentChar === COMMENT_START)
+			WHITESPACE_CHARS_SINGLE.includes(this.currentChar)
 		) {
 			this.advance();
 		}
@@ -103,14 +104,26 @@ export class CebolLexer implements CebolLexerInterface {
 	public getNextToken(): CebolTokenInterface {
 		while (this.currentChar !== null) {
 			if (
-				WHITESPACE_CHARS_SINGLE.includes(this.currentChar) ||
-				COMMENT_START === this.currentChar
+				WHITESPACE_CHARS_SINGLE.includes(this.currentChar)
 			) {
 				if (this.currentChar === BREAKLINE) {
 					this.currentLine++;
 					this.currentColumn = 1;
 				}
-				this.skipWhitespaceAndComments();
+				this.skipWhitespace();
+				continue;
+			}
+
+			if (this.currentChar === COMMENT_START) {
+				logger.info("Skipping comment");
+				logger.info(`Current char at start of comment: "${this.currentChar}"`);
+				while (
+					this.currentChar !== null &&
+					this.currentChar != BREAKLINE
+				) {
+					logger.info(`Skipping char in comment: "${this.currentChar}"`);
+					this.advance();
+				}
 				continue;
 			}
 
@@ -127,7 +140,7 @@ export class CebolLexer implements CebolLexerInterface {
 				return new CebolToken(CebolLexicalTokenEnum.ASSIGNMENT, EQUALS, 0, 0);
 			}
 
-			if (OPERATORS.includes(this.currentChar)) {
+			if (OPERATORS.includes(this.currentChar) || ARITHMETIC_OPERATORS.includes(this.currentChar)) {
 				const operator = this.currentChar;
 				this.advance();
 				return new CebolToken(CebolLexicalTokenEnum.OPERATOR, operator, 0, 0);

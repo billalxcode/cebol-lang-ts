@@ -17,6 +17,7 @@ export const OPERATOR_MINUS = "-";
 export const OPERATOR_MULTIPLY = "*";
 export const OPERATOR_DIVIDE = "/";
 export const OPERATOR_MODULO = "%";
+export const OPERATOR_POWER = "^";
 export const OPERATOR_ASSIGN = "==";
 export const OPERATOR_NOT_EQUAL = "!=";
 export const OPERATOR_LESS_THAN = "<";
@@ -90,6 +91,15 @@ export const OPERATORS = [
 	OPERATOR_OR,
 	OPERATOR_NOT,
 ];
+
+export const ARITHMETIC_OPERATORS = [
+	OPERATOR_PLUS,
+	OPERATOR_MINUS,
+	OPERATOR_MULTIPLY,
+	OPERATOR_DIVIDE,
+	OPERATOR_MODULO,
+	OPERATOR_POWER,
+]
 
 export const PUNCTUATIONS = [
 	PUNCTUATION_LPARENTHESES,
