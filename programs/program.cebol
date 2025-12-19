@@ -1,3 +1,3 @@
-program HaloDunia() {
+program utama() {
     cetak("Halo dari bahasa Cebol")
 }

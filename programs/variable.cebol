@@ -1,0 +1,7 @@
+program utama() {
+    atur: angka var1 = 10
+    atur: teks var2 = "Ini teks"
+
+    cetak(var1)
+    cetak(var2)
+}

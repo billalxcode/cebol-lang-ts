@@ -2,5 +2,5 @@
     "editor.codeActionsOnSave": {
         "source.biome": "explicit",
         "source.organizeImports.biome": "explicit"
-    },
+    }
 }

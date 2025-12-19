@@ -5,6 +5,7 @@ export const IDENTIFIER_START_CHARS = LETTERS;
 export const IDENTIFIER_CHARS = LETTERS + DIGITS;
 export const COMMA = ",";
 export const SEMICOLON = ";";
+export const COLON = ":";
 export const BREAKLINE = "\n";
 export const EQUALS = "=";
 export const STRING_DELIMITER = '"';
@@ -16,6 +17,7 @@ export const OPERATOR_MINUS = "-";
 export const OPERATOR_MULTIPLY = "*";
 export const OPERATOR_DIVIDE = "/";
 export const OPERATOR_MODULO = "%";
+export const OPERATOR_POWER = "^";
 export const OPERATOR_ASSIGN = "==";
 export const OPERATOR_NOT_EQUAL = "!=";
 export const OPERATOR_LESS_THAN = "<";
@@ -31,7 +33,7 @@ export const KEYWORD_FUNCTION_PRINT = "cetak";
 export const KEYWORD_FUNCTION_RETURN = "kembalikan";
 export const KEYWORD_FUNCTION_DEFINE = "program";
 export const KEYWORD_IF = "jika";
-export const KEYWORD_ELSE = "jika tidak";
+export const KEYWORD_ELSE = "lainnya";
 export const KEYWORD_WHILE = "selama";
 export const KEYWORD_VAR = "atur";
 
@@ -42,6 +44,7 @@ export const PUNCTUATION_LBRACE = "{";
 export const PUNCTUATION_RBRACE = "}";
 export const PUNCTUATION_COMMA = COMMA;
 export const PUNCTUATION_SEMICOLON = SEMICOLON;
+export const PUNCTUATION_COLON = COLON;
 
 // Whitespace characters
 export const WHITESPACE_SPACE = " ";
@@ -52,11 +55,6 @@ export const WHITESPACE_CARRIAGE_RETURN = "\r";
 // Types Data
 export const TYPE_NUMBER = "angka";
 export const TYPE_STRING = "teks";
-export const TYPE_BOOLEAN = "biner"; // TODO: implement boolean type
-export const TYPE_VOID = "kosong"; // TODO: implement void type
-export const TYPE_ARRAY = "larik"; // TODO: implement array type
-export const TYPE_OBJECT = "objek"; // TODO: implement object type
-export const TYPE_FUNCTION = "program"; // TODO: implement function type
 
 // Single collections
 export const WHITESPACE_CHARS_SINGLE = [
@@ -94,6 +92,15 @@ export const OPERATORS = [
 	OPERATOR_NOT,
 ];
 
+export const ARITHMETIC_OPERATORS = [
+	OPERATOR_PLUS,
+	OPERATOR_MINUS,
+	OPERATOR_MULTIPLY,
+	OPERATOR_DIVIDE,
+	OPERATOR_MODULO,
+	OPERATOR_POWER,
+];
+
 export const PUNCTUATIONS = [
 	PUNCTUATION_LPARENTHESES,
 	PUNCTUATION_RPARENTHESES,
@@ -101,14 +108,7 @@ export const PUNCTUATIONS = [
 	PUNCTUATION_RBRACE,
 	PUNCTUATION_COMMA,
 	PUNCTUATION_SEMICOLON,
+	PUNCTUATION_COLON,
 ];
 
-export const TYPES_DATA = [
-    TYPE_NUMBER,
-    TYPE_STRING,
-    TYPE_BOOLEAN,
-    TYPE_VOID,
-    TYPE_ARRAY,
-    TYPE_OBJECT,
-    TYPE_FUNCTION,
-]
+export const TYPES_DATA = [TYPE_NUMBER, TYPE_STRING];

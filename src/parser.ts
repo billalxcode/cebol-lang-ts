@@ -1,3 +1,5 @@
+import { isDebug } from "./arguments";
+import { ARITHMETIC_OPERATORS } from "./constants";
 import { logger } from "./logger";
 import { CebolBinaryOpNode } from "./nodes/binary";
 import { CebolNumberNode } from "./nodes/number";
@@ -5,26 +7,30 @@ import { CebolStringNode } from "./nodes/string";
 import type { CebolASTNode, CebolTokenInterface } from "./nodes/types";
 import { CebolLexicalTokenEnum } from "./nodes/types";
 import { CebolStatementManager } from "./statements/manager";
-import type { CebolBasicStatementInterface, CebolLexerInterface, CebolParserInterface } from "./types/nodes";
+import type {
+	CebolBasicStatementInterface,
+	CebolLexerInterface,
+	CebolParserInterface,
+} from "./types/nodes";
 
 export class CebolParser implements CebolParserInterface {
 	public lexer: CebolLexerInterface;
 	public current_token: CebolTokenInterface;
 
-	private state_manager: CebolBasicStatementInterface
+	private state_manager: CebolBasicStatementInterface;
 
 	constructor(_lexer: CebolLexerInterface) {
 		this.lexer = _lexer;
 
 		this.current_token = this.lexer.getNextToken();
 
-		this.state_manager = new CebolStatementManager(this)
+		this.state_manager = new CebolStatementManager(this);
 	}
 
 	public eat(tokenType: CebolLexicalTokenEnum): void {
 		logger.info(
 			`Eating token: expected ${tokenType}, got ${this.current_token.type}`,
-		)
+		);
 		logger.info(`Current token value: "${this.current_token.value}"`);
 		if (this.current_token.type === tokenType) {
 			this.current_token = this.lexer.getNextToken();
@@ -35,18 +41,59 @@ export class CebolParser implements CebolParserInterface {
 		}
 	}
 
+	public get can_factor(): boolean {
+		const token = this.current_token;
+		return (
+			token.type === CebolLexicalTokenEnum.NUMBER ||
+			token.type === CebolLexicalTokenEnum.STRING
+		);
+	}
+
+	public get can_term(): boolean {
+		return this.can_factor;
+	}
+
+	public get can_expr(): boolean {
+		return this.can_term;
+	}
+
+	public get valid_arithmetic_operator(): boolean {
+		const token = this.current_token;
+		return (
+			token.type === CebolLexicalTokenEnum.OPERATOR &&
+			ARITHMETIC_OPERATORS.includes(token.value)
+		);
+	}
+
 	public factor(): CebolASTNode {
 		const token = this.current_token;
 		logger.info(`Parsing factor, current token: ${token.toString()}`);
-		if (token.type === CebolLexicalTokenEnum.NUMBER) {
-			this.eat(CebolLexicalTokenEnum.NUMBER);
-			return new CebolNumberNode(Number(token.value));
-		} else if (token.type === CebolLexicalTokenEnum.STRING) {
-			this.eat(CebolLexicalTokenEnum.STRING);
-			return new CebolStringNode(token.value);
-		} else {
-			throw new Error(`Unexpected token in factor: ${token.toString()}`);
+
+		let factorNode: CebolASTNode
+
+		switch (token.type) {
+			case CebolLexicalTokenEnum.NUMBER:
+				this.eat(CebolLexicalTokenEnum.NUMBER);
+				factorNode = new CebolNumberNode(Number(token.value));
+				break;
+			case CebolLexicalTokenEnum.STRING:
+				this.eat(CebolLexicalTokenEnum.STRING);
+				factorNode = new CebolStringNode(token.value);
+				break;
+			case CebolLexicalTokenEnum.IDENTIFIER:
+				this.eat(CebolLexicalTokenEnum.IDENTIFIER);
+				// i dont know what to do here yet haha
+				factorNode = new CebolStringNode(token.value);
+				break;
+			case CebolLexicalTokenEnum.LPARENTHESES:
+				this.eat(CebolLexicalTokenEnum.LPARENTHESES);
+				factorNode = this.expr();
+				this.eat(CebolLexicalTokenEnum.RPARENTHESES);
+				break;
+			default:
+				throw new Error(`Unexpected token in factor: ${token.toString()}`);
 		}
+		return factorNode;
 	}
 
 	public term(): CebolASTNode {
@@ -63,7 +110,9 @@ export class CebolParser implements CebolParserInterface {
 			const operator = token
 			const right = this.factor()
 
-			logger.info(`Creating binary operation node: ${left.toString()} ${operator.value} ${right.toString()}`);
+			logger.info(
+				`Creating binary operation node: ${left.toString()} ${operator.value} ${right.toString()}`,
+			);
 			node = new CebolBinaryOpNode(left, operator, right);
 		}
 
@@ -75,7 +124,7 @@ export class CebolParser implements CebolParserInterface {
 
 		while (
 			this.current_token.type === CebolLexicalTokenEnum.OPERATOR &&
-			(this.current_token.value === "+" || this.current_token.value === "-")
+			this.valid_arithmetic_operator
 		) {
 			const token = this.current_token;
 			this.eat(CebolLexicalTokenEnum.OPERATOR);
@@ -85,103 +134,6 @@ export class CebolParser implements CebolParserInterface {
 
 		return node;
 	}
-
-	// public programStatement(): CebolASTNode {
-	// 	this.eat(CebolLexicalTokenEnum.KEYWORD); // 'program'
-
-	// 	const nameToken = this.current_token;
-	// 	logger.info(`Parsing program name, current token: ${nameToken.toString()}`);
-	// 	this.eat(CebolLexicalTokenEnum.IDENTIFIER);
-
-	// 	logger.info(
-	// 		`Parsing program body, current token: ${this.current_token.toString()}`,
-	// 	);
-	// 	this.eat(CebolLexicalTokenEnum.LBRACE); // '{'
-
-	// 	logger.info(
-	// 		`Entering program body parsing loop, current token: ${this.current_token.toString()}`,
-	// 	);
-	// 	const body: CebolASTNode[] = [];
-	// 	while (this.current_token.type !== CebolLexicalTokenEnum.RBRACE) {
-	// 		logger.info(
-	// 			`Parsing statement in program body, current token: ${this.current_token.toString()}`,
-	// 		);
-	// 		body.push(this.statement());
-	// 	}
-
-	// 	logger.info(
-	// 		`Exiting program body parsing loop, current token: ${this.current_token.toString()}`,
-	// 	);
-	// 	this.eat(CebolLexicalTokenEnum.RBRACE); // '}'
-
-	// 	logger.info(`Completed parsing program: ${nameToken.value}`);
-	// 	logger.info(`Program body contains ${body.length} statements.`);
-	// 	logger.info(
-	// 		`Current token after program body: ${this.current_token.toString()}`,
-	// 	);
-	// 	return new CebolProgramNode(nameToken.value, body);
-	// }
-
-	// public printStatement(): CebolASTNode {
-	// 	this.eat(CebolLexicalTokenEnum.KEYWORD); // 'cetak'
-	// 	this.eat(CebolLexicalTokenEnum.LPARENTHESES); // '('
-	// 	const exprNode = this.expr();
-	// 	this.eat(CebolLexicalTokenEnum.RPARENTHESES); // ')'
-	// 	return new CebolPrintNode(exprNode);
-	// }
-
-	// public isProgramDefinition(): boolean {
-	// 	return (
-	// 		this.current_token.type === CebolLexicalTokenEnum.KEYWORD &&
-	// 		this.current_token.value === KEYWORD_FUNCTION_DEFINE
-	// 	);
-	// }
-
-	// public isPrintStatement(): boolean {
-	// 	return (
-	// 		this.current_token.type === CebolLexicalTokenEnum.KEYWORD &&
-	// 		this.current_token.value === KEYWORD_FUNCTION_PRINT
-	// 	);
-	// }
-
-	// public statement(): CebolASTNode {
-	// 	const token = this.current_token;
-	// 	logger.info(`Parsing statement, current token: ${token.toString()}`);
-
-	// 	if (
-	// 		token.type === CebolLexicalTokenEnum.KEYWORD
-	// 	) {
-	// 		if (this.isProgramDefinition()) {
-	// 			return this.programStatement();
-	// 		} else if (this.isPrintStatement()) {
-	// 			return this.printStatement();
-	// 		}
-	// 		this.eat(CebolLexicalTokenEnum.KEYWORD);
-	// 		const varToken = this.current_token;
-	// 		this.eat(CebolLexicalTokenEnum.IDENTIFIER);
-	// 		this.eat(CebolLexicalTokenEnum.ASSIGNMENT);
-	// 		const exprNode = this.expr();
-	// 		return new CebolAssignNode(new CebolStringNode(varToken.value), exprNode);
-	// 	} else if (token.type === CebolLexicalTokenEnum.IDENTIFIER) {
-	// 		const varToken = this.current_token;
-	// 		this.eat(CebolLexicalTokenEnum.IDENTIFIER);
-	// 		this.eat(CebolLexicalTokenEnum.ASSIGNMENT);
-	// 		const exprNode = this.expr();
-	// 		return new CebolAssignNode(new CebolStringNode(varToken.value), exprNode);
-
-	// 		// } else if (
-	// 		// 	token.type === CebolLexicalTokenEnum.KEYWORD &&
-	// 		// 	token.value === KEYWORD_FUNCTION_PRINT
-	// 		// ) {
-	// 		// 	this.eat(CebolLexicalTokenEnum.KEYWORD);
-	// 		// 	this.eat(CebolLexicalTokenEnum.LPARENTHESES);
-	// 		// 	const exprNode = this.expr();
-	// 		// 	this.eat(CebolLexicalTokenEnum.RPARENTHESES);
-	// 		// 	return new CebolPrintNode(exprNode);
-	// 	} else {
-	// 		throw new Error(`Unexpected token in statement: ${token.toString()}`);
-	// 	}
-	// }
 
 	public parse(): CebolASTNode[] {
 		const nodes: CebolASTNode[] = [];
@@ -196,6 +148,14 @@ export class CebolParser implements CebolParserInterface {
 			nodes.push(node);
 		}
 
+		logger.info(`Parsing complete, total nodes: ${nodes.length}`);
+		if (isDebug) {
+			// Write parsed nodes to nodes.json for debugging
+			const nodesData = nodes.map((node) => node.toObject());
+			Bun.write("nodes.json", JSON.stringify(nodesData, null, 4));
+
+			logger.info(`Wrote ${nodes.length} nodes to nodes.json`);
+		}
 		return nodes;
 	}
 }

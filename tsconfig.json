@@ -1,9 +1,7 @@
 {
 	"compilerOptions": {
 		// Environment setup & latest features
-		"lib": [
-			"ESNext"
-		],
+		"lib": ["ESNext"],
 		"target": "ESNext",
 		"module": "Preserve",
 		"moduleDetection": "force",
@@ -28,15 +26,10 @@
 		"ignoreDeprecations": "6.0",
 		"baseUrl": ".",
 
-		"typeRoots": [
-			"./node_modules/@types",
-			"./src/types"
-		],
-		
+		"typeRoots": ["./node_modules/@types", "./src/types"],
+
 		"paths": {
-			"@/*": [
-				"./src/*"
-			]
+			"@/*": ["./src/*"]
 		}
 	}
 }

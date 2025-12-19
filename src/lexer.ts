@@ -1,4 +1,5 @@
 import {
+	ARITHMETIC_OPERATORS,
 	BREAKLINE,
 	COMMENT_START,
 	DIGITS,
@@ -6,12 +7,18 @@ import {
 	IDENTIFIER_CHARS,
 	KEYWORDS,
 	OPERATORS,
+	PUNCTUATION_COLON,
+	PUNCTUATION_LBRACE,
+	PUNCTUATION_LPARENTHESES,
+	PUNCTUATION_RBRACE,
+	PUNCTUATION_RPARENTHESES,
 	PUNCTUATIONS,
 	STRING_DELIMITER,
 	WHITESPACE_CHARS_SINGLE,
 } from "@/constants";
 import { CebolToken } from "@/nodes/token";
 import { CebolLexicalTokenEnum, type CebolTokenInterface } from "@/nodes/types";
+import { logger } from "./logger";
 import type { CebolLexerInterface } from "./types/nodes";
 
 export class CebolLexer implements CebolLexerInterface {
@@ -51,11 +58,10 @@ export class CebolLexer implements CebolLexerInterface {
 		}
 	}
 
-	public skipWhitespaceAndComments(): void {
+	public skipWhitespace(): void {
 		while (
 			this.currentChar !== null &&
-			(WHITESPACE_CHARS_SINGLE.includes(this.currentChar) ||
-				this.currentChar === COMMENT_START)
+			WHITESPACE_CHARS_SINGLE.includes(this.currentChar)
 		) {
 			this.advance();
 		}
@@ -98,14 +104,26 @@ export class CebolLexer implements CebolLexerInterface {
 	public getNextToken(): CebolTokenInterface {
 		while (this.currentChar !== null) {
 			if (
-				WHITESPACE_CHARS_SINGLE.includes(this.currentChar) ||
-				COMMENT_START === this.currentChar
+				WHITESPACE_CHARS_SINGLE.includes(this.currentChar)
 			) {
 				if (this.currentChar === BREAKLINE) {
 					this.currentLine++;
 					this.currentColumn = 1;
 				}
-				this.skipWhitespaceAndComments();
+				this.skipWhitespace();
+				continue;
+			}
+
+			if (this.currentChar === COMMENT_START) {
+				logger.info("Skipping comment");
+				logger.info(`Current char at start of comment: "${this.currentChar}"`);
+				while (
+					this.currentChar !== null &&
+					this.currentChar !== BREAKLINE
+				) {
+					logger.info(`Skipping char in comment: "${this.currentChar}"`);
+					this.advance();
+				}
 				continue;
 			}
 
@@ -122,7 +140,7 @@ export class CebolLexer implements CebolLexerInterface {
 				return new CebolToken(CebolLexicalTokenEnum.ASSIGNMENT, EQUALS, 0, 0);
 			}
 
-			if (OPERATORS.includes(this.currentChar)) {
+			if (OPERATORS.includes(this.currentChar) || ARITHMETIC_OPERATORS.includes(this.currentChar)) {
 				const operator = this.currentChar;
 				this.advance();
 				return new CebolToken(CebolLexicalTokenEnum.OPERATOR, operator, 0, 0);
@@ -130,7 +148,7 @@ export class CebolLexer implements CebolLexerInterface {
 
 			if (PUNCTUATIONS.includes(this.currentChar)) {
 				const punctuation = this.currentChar;
-				if (punctuation === "{") {
+				if (punctuation === PUNCTUATION_LBRACE) {
 					this.advance();
 					return new CebolToken(
 						CebolLexicalTokenEnum.LBRACE,
@@ -138,7 +156,7 @@ export class CebolLexer implements CebolLexerInterface {
 						0,
 						0,
 					);
-				} else if (punctuation === "}") {
+				} else if (punctuation === PUNCTUATION_RBRACE) {
 					this.advance();
 					return new CebolToken(
 						CebolLexicalTokenEnum.RBRACE,
@@ -146,7 +164,7 @@ export class CebolLexer implements CebolLexerInterface {
 						0,
 						0,
 					);
-				} else if (punctuation === "(") {
+				} else if (punctuation === PUNCTUATION_LPARENTHESES) {
 					this.advance();
 					return new CebolToken(
 						CebolLexicalTokenEnum.LPARENTHESES,
@@ -154,7 +172,7 @@ export class CebolLexer implements CebolLexerInterface {
 						0,
 						0,
 					);
-				} else if (punctuation === ")") {
+				} else if (punctuation === PUNCTUATION_RPARENTHESES) {
 					this.advance();
 					return new CebolToken(
 						CebolLexicalTokenEnum.RPARENTHESES,
@@ -162,6 +180,10 @@ export class CebolLexer implements CebolLexerInterface {
 						0,
 						0,
 					);
+				} else if (punctuation === PUNCTUATION_COLON) {
+					this.advance();
+
+					return new CebolToken(CebolLexicalTokenEnum.COLON, punctuation, 0, 0);
 				} else {
 					this.advance();
 					return new CebolToken(

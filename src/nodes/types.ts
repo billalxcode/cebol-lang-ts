@@ -10,54 +10,90 @@ export enum CebolLexicalTokenEnum {
 	COMMENT = "COMMENT",
 	LBRACE = "LBRACE",
 	RBRACE = "RBRACE",
+	COLON = "COLON",
+	COMMA = "COMMA",
 	LPARENTHESES = "LPARENTHESES",
 	RPARENTHESES = "RPARENTHESES",
 	EOF = "EOF",
 }
 
+export enum CebolNodeNameEnum {
+	NUMBER_NODE = "CebolNumberNode",
+	STRING_NODE = "CebolStringNode",
+	BINARY_OP_NODE = "CebolBinaryOpNode",
+	ASSIGN_NODE = "CebolAssignNode",
+	PRINT_NODE = "CebolPrintNode",
+	PROGRAM_NODE = "CebolProgramNode",
+	CONDITION_NODE = "CebolConditionNode",
+	VARIABLE_NODE = "CebolVariableNode",
+	MATH_NODE = "CebolMathNode",
+	TOKEN_NODE = "CebolToken",
+}
+
 export interface CebolBaseNodeInterface {
-    toString(): string;
+	name: string;
+	toObject(): object;
+	toString(): string;
 }
 
 export interface CebolNumberNodeInterface extends CebolBaseNodeInterface {
-    readonly value: number;
+	readonly value: number;
 }
 
 export interface CebolAssignNodeInterface extends CebolBaseNodeInterface {
-    readonly variable: CebolBaseNodeInterface;
-    readonly value: CebolBaseNodeInterface;
+	readonly variable: CebolBaseNodeInterface;
+	readonly value: CebolBaseNodeInterface;
 }
 
 export interface CebolBinaryOpNodeInterface extends CebolBaseNodeInterface {
-    readonly left: CebolBaseNodeInterface;
-    readonly operator: CebolBaseNodeInterface;
-    readonly right: CebolBaseNodeInterface;
+	readonly left: CebolBaseNodeInterface;
+	readonly operator: CebolBaseNodeInterface;
+	readonly right: CebolBaseNodeInterface;
 }
 
 export interface CebolStringNodeInterface extends CebolBaseNodeInterface {
-    readonly value: string;
+	readonly value: string;
 }
 
 export interface CebolProgramNodeInterface extends CebolBaseNodeInterface {
-    readonly name: string;
-    readonly body: CebolBaseNodeInterface[];
+	readonly name: string;
+	readonly bodies: CebolBaseNodeInterface[];
+	readonly params: string[];
+}
+
+export interface CebolConditionNodeInterface extends CebolBaseNodeInterface {
+	readonly condition: CebolBaseNodeInterface;
+	readonly trueBranch: CebolBaseNodeInterface[];
+	readonly falseBranch: CebolBaseNodeInterface[] | null;
 }
 
 export interface CebolPrintNodeInterface extends CebolBaseNodeInterface {
-    readonly expression: CebolBaseNodeInterface;
+	readonly expressions: CebolBaseNodeInterface[];
 }
 
 export interface CebolTokenInterface extends CebolBaseNodeInterface {
-    readonly type: CebolLexicalTokenEnum;
-    readonly value: string;
-    readonly line: number;
-    readonly column: number;
+	readonly type: CebolLexicalTokenEnum;
+	readonly value: string;
+	readonly line: number;
+	readonly column: number;
+}
+
+export interface CebolVariableNodeInterface extends CebolBaseNodeInterface {
+	readonly varName: string;
+	readonly varType: CebolLexicalTokenEnum.NUMBER | CebolLexicalTokenEnum.STRING;
+	readonly value: CebolASTNode;
+}
+
+export interface CebolMathNodeInterface extends CebolBaseNodeInterface {
+	readonly expression: string;
 }
 
 export type CebolASTNode =
-    | CebolNumberNodeInterface
-    | CebolStringNodeInterface
-    | CebolBinaryOpNodeInterface
-    | CebolAssignNodeInterface
-    | CebolPrintNodeInterface
-    | CebolProgramNodeInterface;
+	| CebolNumberNodeInterface
+	| CebolStringNodeInterface
+	| CebolBinaryOpNodeInterface
+	| CebolAssignNodeInterface
+	| CebolPrintNodeInterface
+	| CebolProgramNodeInterface
+	| CebolConditionNodeInterface
+	| CebolVariableNodeInterface;
