@@ -11,7 +11,7 @@ export interface CebolLexerInterface {
 	currentColumn: number;
 
 	advance(): void;
-	skipWhitespaceAndComments(): void;
+	skipWhitespace(): void;
 	number(): CebolTokenInterface;
 	identifier(): CebolTokenInterface;
 	keywordOrIdentifier(): CebolTokenInterface;
