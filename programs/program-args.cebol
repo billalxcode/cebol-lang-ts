@@ -1,12 +1,14 @@
+# Cebol Programing Language
+
 program tambah(a, b) {
-    atur angka hasil = a + b
+    atur: angka hasil = 1 + 2
 
     cetak(hasil)
 }
 
 program utama() {
-    atur angka a = 10
-    atur angka b = 20
+    atur: angka a = 10
+    atur: angka b = 20
 
-    tambah(a, b)
+    # tambah(a, b)
 }

@@ -1,5 +1,5 @@
-atur angka x = 10
-atur teks y = "Halo Dunia"
+atur: angka x = 10
+atur: teks y = "Halo Dunia"
 
 cetak("Angka x adalah", x)
 cetak("Isi dari y adalah", y)
