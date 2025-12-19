@@ -43,7 +43,11 @@ export class CebolParser implements CebolParserInterface {
 
 	public get can_factor(): boolean {
 		const token = this.current_token;
+
 		return (
+			token.type === CebolLexicalTokenEnum.RPARENTHESES ||
+			token.type === CebolLexicalTokenEnum.LPARENTHESES ||
+			token.type === CebolLexicalTokenEnum.IDENTIFIER ||
 			token.type === CebolLexicalTokenEnum.NUMBER ||
 			token.type === CebolLexicalTokenEnum.STRING
 		);
