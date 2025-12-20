@@ -23,7 +23,6 @@
 		"noUnusedParameters": false,
 		"noPropertyAccessFromIndexSignature": false,
 
-		"ignoreDeprecations": "6.0",
 		"baseUrl": ".",
 
 		"typeRoots": ["./node_modules/@types", "./src/types"],
