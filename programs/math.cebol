@@ -1,17 +1,8 @@
-cetak("Cebol Math Program")
+cetak(1 + 5)
+cetak(10 - 2)
+cetak(4 * 2)
+cetak(20 / 4)
+cetak(7 % 3)
+cetak((3 + 5) * 2)
 
-atur: angka x = 10
-atur: angka y = 20
-atur: angka hasil_tambah = x + y
-atur: angka hasil_kurang = y - x
-atur: angka hasil_kali = x * y
-atur: angka hasil_bagi = y / x
-
-cetak("Hasil Penjumlahan: ")
-cetak(hasil_tambah)
-cetak("Hasil Pengurangan: ")
-cetak(hasil_kurang)
-cetak("Hasil Perkalian: ")
-cetak(hasil_kali)
-cetak("Hasil Pembagian: ")
-cetak(hasil_bagi)
+cetak("Program selesai")
