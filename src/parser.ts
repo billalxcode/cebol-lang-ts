@@ -89,7 +89,7 @@ export class CebolParser implements CebolParserInterface {
 				this.eat(CebolLexicalTokenEnum.IDENTIFIER);
 				// i dont know what to do here yet haha
 				logger.info(`Identifier factor encountered: ${token.value}`);
-				factorNode = new CebolVariableNode(token.value, CebolLexicalTokenEnum.IDENTIFIER);
+				factorNode = new CebolVariableNode(token.value);
 				break;
 			case CebolLexicalTokenEnum.LPARENTHESES:
 				this.eat(CebolLexicalTokenEnum.LPARENTHESES);

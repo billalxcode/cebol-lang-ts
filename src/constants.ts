@@ -1,60 +1,59 @@
 // Basic characters
-export const DIGITS = "0123456789";
-export const LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
-export const IDENTIFIER_START_CHARS = LETTERS;
-export const IDENTIFIER_CHARS = LETTERS + DIGITS;
-export const COMMA = ",";
-export const SEMICOLON = ";";
-export const COLON = ":";
-export const BREAKLINE = "\n";
-export const EQUALS = "=";
-export const STRING_DELIMITER = '"';
-export const COMMENT_START = "#";
+export const DIGITS: string = "0123456789";
+export const LETTERS: string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+export const IDENTIFIER_START_CHARS: string = LETTERS;
+export const IDENTIFIER_CHARS: string = LETTERS + DIGITS;
+export const COMMA: string = ",";
+export const SEMICOLON: string = ";";
+export const COLON: string = ":";
+export const BREAKLINE: string = "\n";
+export const EQUALS: string = "=";
+export const STRING_DELIMITER: string = '"';
+export const COMMENT_START: string = "#";
 
 // Operators
-export const OPERATOR_PLUS = "+";
-export const OPERATOR_MINUS = "-";
-export const OPERATOR_MULTIPLY = "*";
-export const OPERATOR_DIVIDE = "/";
-export const OPERATOR_MODULO = "%";
-export const OPERATOR_POWER = "^";
-export const OPERATOR_ASSIGN = "==";
-export const OPERATOR_NOT_EQUAL = "!=";
-export const OPERATOR_LESS_THAN = "<";
-export const OPERATOR_LESS_THAN_EQUAL = "<=";
-export const OPERATOR_GREATER_THAN = ">";
-export const OPERATOR_GREATER_THAN_EQUAL = ">=";
-export const OPERATOR_AND = "dan";
-export const OPERATOR_OR = "atau";
-export const OPERATOR_NOT = "bukan";
+export const OPERATOR_PLUS: string = "+";
+export const OPERATOR_MINUS: string = "-";
+export const OPERATOR_MULTIPLY: string = "*";
+export const OPERATOR_DIVIDE: string = "/";
+export const OPERATOR_MODULO: string = "%";
+export const OPERATOR_POWER: string = "^";
+export const OPERATOR_ASSIGN: string = "==";
+export const OPERATOR_NOT_EQUAL: string = "!=";
+export const OPERATOR_LESS_THAN: string = "<";
+export const OPERATOR_LESS_THAN_EQUAL: string = "<=";
+export const OPERATOR_GREATER_THAN: string = ">";
+export const OPERATOR_GREATER_THAN_EQUAL: string = ">=";
+export const OPERATOR_AND: string = "dan";
+export const OPERATOR_OR: string = "atau";
+export const OPERATOR_NOT: string = "bukan";
 
 // Keywords
-export const KEYWORD_FUNCTION_PRINT = "cetak";
-export const KEYWORD_FUNCTION_RETURN = "kembalikan";
-export const KEYWORD_FUNCTION_DEFINE = "program";
-export const KEYWORD_IF = "jika";
-export const KEYWORD_ELSE = "lainnya";
-export const KEYWORD_WHILE = "selama";
-export const KEYWORD_VAR = "atur";
-
+export const KEYWORD_FUNCTION_PRINT: string = "cetak";
+export const KEYWORD_FUNCTION_RETURN: string = "kembalikan";
+export const KEYWORD_FUNCTION_DEFINE: string = "program";
+export const KEYWORD_IF: string = "jika";
+export const KEYWORD_ELSE: string = "lainnya";
+export const KEYWORD_WHILE: string = "selama";
+export const KEYWORD_VAR: string = "atur";
 // Punctuations
-export const PUNCTUATION_LPARENTHESES = "(";
-export const PUNCTUATION_RPARENTHESES = ")";
-export const PUNCTUATION_LBRACE = "{";
-export const PUNCTUATION_RBRACE = "}";
-export const PUNCTUATION_COMMA = COMMA;
-export const PUNCTUATION_SEMICOLON = SEMICOLON;
-export const PUNCTUATION_COLON = COLON;
+export const PUNCTUATION_LPARENTHESES: string = "(";
+export const PUNCTUATION_RPARENTHESES: string = ")";
+export const PUNCTUATION_LBRACE: string = "{";
+export const PUNCTUATION_RBRACE: string = "}";
+export const PUNCTUATION_COMMA: string = COMMA;
+export const PUNCTUATION_SEMICOLON: string = SEMICOLON;
+export const PUNCTUATION_COLON: string = COLON;
 
 // Whitespace characters
-export const WHITESPACE_SPACE = " ";
-export const WHITESPACE_TAB = "\t";
-export const WHITESPACE_NEWLINE = "\n";
-export const WHITESPACE_CARRIAGE_RETURN = "\r";
+export const WHITESPACE_SPACE: string = " ";
+export const WHITESPACE_TAB: string = "\t";
+export const WHITESPACE_NEWLINE: string = "\n";
+export const WHITESPACE_CARRIAGE_RETURN: string = "\r";
 
 // Types Data
-export const TYPE_NUMBER = "angka";
-export const TYPE_STRING = "teks";
+export const TYPE_NUMBER: string = "angka";
+export const TYPE_STRING: string = "teks";
 
 // Single collections
 export const WHITESPACE_CHARS_SINGLE = [
