@@ -14,7 +14,13 @@ export const { values, positionals } = parseArgs({
 			short: "d",
 			default: false,
 			description: "Enable debug mode and write debug files",
-		}
+		},
+		repl: {
+			type: "boolean",
+			short: "r",
+			default: false,
+			description: "Start the REPL instead of executing a file",
+		},
 	},
 	strict: true,
 	allowPositionals: true,
@@ -22,3 +28,4 @@ export const { values, positionals } = parseArgs({
 
 export const isVerbose = values.verbose as boolean;
 export const isDebug = values.debug as boolean;
+export const isRepl = values.repl as boolean;

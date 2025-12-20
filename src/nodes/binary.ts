@@ -1,7 +1,7 @@
 import {
-	CebolNodeNameEnum,
 	type CebolBaseNodeInterface,
 	type CebolBinaryOpNodeInterface,
+	CebolNodeNameEnum,
 } from "@/nodes/types";
 
 export class CebolBinaryOpNode implements CebolBinaryOpNodeInterface {

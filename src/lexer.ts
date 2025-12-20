@@ -103,9 +103,7 @@ export class CebolLexer implements CebolLexerInterface {
 
 	public getNextToken(): CebolTokenInterface {
 		while (this.currentChar !== null) {
-			if (
-				WHITESPACE_CHARS_SINGLE.includes(this.currentChar)
-			) {
+			if (WHITESPACE_CHARS_SINGLE.includes(this.currentChar)) {
 				if (this.currentChar === BREAKLINE) {
 					this.currentLine++;
 					this.currentColumn = 1;
@@ -117,10 +115,7 @@ export class CebolLexer implements CebolLexerInterface {
 			if (this.currentChar === COMMENT_START) {
 				logger.info("Skipping comment");
 				logger.info(`Current char at start of comment: "${this.currentChar}"`);
-				while (
-					this.currentChar !== null &&
-					this.currentChar !== BREAKLINE
-				) {
+				while (this.currentChar !== null && this.currentChar !== BREAKLINE) {
 					logger.info(`Skipping char in comment: "${this.currentChar}"`);
 					this.advance();
 				}
@@ -140,7 +135,10 @@ export class CebolLexer implements CebolLexerInterface {
 				return new CebolToken(CebolLexicalTokenEnum.ASSIGNMENT, EQUALS, 0, 0);
 			}
 
-			if (OPERATORS.includes(this.currentChar) || ARITHMETIC_OPERATORS.includes(this.currentChar)) {
+			if (
+				OPERATORS.includes(this.currentChar) ||
+				ARITHMETIC_OPERATORS.includes(this.currentChar)
+			) {
 				const operator = this.currentChar;
 				this.advance();
 				return new CebolToken(CebolLexicalTokenEnum.OPERATOR, operator, 0, 0);

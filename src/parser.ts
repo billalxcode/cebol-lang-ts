@@ -6,6 +6,7 @@ import { CebolNumberNode } from "./nodes/number";
 import { CebolStringNode } from "./nodes/string";
 import type { CebolASTNode, CebolTokenInterface } from "./nodes/types";
 import { CebolLexicalTokenEnum } from "./nodes/types";
+import { CebolVariableNode } from "./nodes/variable";
 import { CebolStatementManager } from "./statements/manager";
 import type {
 	CebolBasicStatementInterface,
@@ -43,7 +44,11 @@ export class CebolParser implements CebolParserInterface {
 
 	public get can_factor(): boolean {
 		const token = this.current_token;
+
 		return (
+			token.type === CebolLexicalTokenEnum.RPARENTHESES ||
+			token.type === CebolLexicalTokenEnum.LPARENTHESES ||
+			token.type === CebolLexicalTokenEnum.IDENTIFIER ||
 			token.type === CebolLexicalTokenEnum.NUMBER ||
 			token.type === CebolLexicalTokenEnum.STRING
 		);
@@ -69,7 +74,7 @@ export class CebolParser implements CebolParserInterface {
 		const token = this.current_token;
 		logger.info(`Parsing factor, current token: ${token.toString()}`);
 
-		let factorNode: CebolASTNode
+		let factorNode: CebolASTNode;
 
 		switch (token.type) {
 			case CebolLexicalTokenEnum.NUMBER:
@@ -83,7 +88,8 @@ export class CebolParser implements CebolParserInterface {
 			case CebolLexicalTokenEnum.IDENTIFIER:
 				this.eat(CebolLexicalTokenEnum.IDENTIFIER);
 				// i dont know what to do here yet haha
-				factorNode = new CebolStringNode(token.value);
+				logger.info(`Identifier factor encountered: ${token.value}`);
+				factorNode = new CebolVariableNode(token.value);
 				break;
 			case CebolLexicalTokenEnum.LPARENTHESES:
 				this.eat(CebolLexicalTokenEnum.LPARENTHESES);
@@ -106,9 +112,9 @@ export class CebolParser implements CebolParserInterface {
 			const token = this.current_token;
 			this.eat(CebolLexicalTokenEnum.OPERATOR);
 
-			const left = node
-			const operator = token
-			const right = this.factor()
+			const left = node;
+			const operator = token;
+			const right = this.factor();
 
 			logger.info(
 				`Creating binary operation node: ${left.toString()} ${operator.value} ${right.toString()}`,

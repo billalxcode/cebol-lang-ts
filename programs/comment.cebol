@@ -1,0 +1,6 @@
+# Cebol comment syntax
+# Ini adalah sebuah komentar tunggal di Cebol
+
+program utama() {
+    cetak("Halo Dunia")
+}

@@ -1,6 +1,6 @@
 import {
-	CebolNodeNameEnum,
 	type CebolBaseNodeInterface,
+	CebolNodeNameEnum,
 	type CebolProgramNodeInterface,
 } from "@/nodes/types";
 

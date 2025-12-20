@@ -1,7 +1,7 @@
 import {
-	CebolNodeNameEnum,
 	type CebolASTNode,
 	type CebolBaseNodeInterface,
+	CebolNodeNameEnum,
 	type CebolPrintNodeInterface,
 } from "@/nodes/types";
 

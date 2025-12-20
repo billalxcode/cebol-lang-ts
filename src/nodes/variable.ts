@@ -1,38 +1,21 @@
-import {
-	CebolNodeNameEnum,
-	type CebolASTNode,
-	type CebolLexicalTokenEnum,
-	type CebolVariableNodeInterface,
-} from "./types";
+import { CebolNodeNameEnum, type CebolVariableNodeInterface } from "./types";
 
 export class CebolVariableNode implements CebolVariableNodeInterface {
 	public name = CebolNodeNameEnum.VARIABLE_NODE;
 	public readonly varName: string;
-	public readonly varType:
-		| CebolLexicalTokenEnum.NUMBER
-		| CebolLexicalTokenEnum.STRING;
-	public readonly value: CebolASTNode;
 
-	constructor(
-		_name: string,
-		_varType: CebolLexicalTokenEnum.NUMBER | CebolLexicalTokenEnum.STRING,
-		_value: CebolASTNode,
-	) {
+	constructor(_name: string) {
 		this.varName = _name;
-		this.varType = _varType;
-		this.value = _value;
 	}
 
 	public toObject(): object {
 		return {
 			name: this.name,
 			varName: this.varName,
-			varType: this.varType,
-			value: this.value.toObject(),
 		};
 	}
 
 	public toString(): string {
-		return `${this.name}(varName=${this.varName}, varType=${this.varType}, value=${this.value.toString()})`;
+		return `${this.name}(varName=${this.varName})`;
 	}
 }

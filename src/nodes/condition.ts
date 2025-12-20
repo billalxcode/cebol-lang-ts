@@ -1,7 +1,7 @@
 import {
-	CebolNodeNameEnum,
 	type CebolBaseNodeInterface,
 	type CebolConditionNodeInterface,
+	CebolNodeNameEnum,
 } from "./types";
 
 export class CebolConditionNode implements CebolConditionNodeInterface {

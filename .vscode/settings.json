@@ -1,6 +1,6 @@
 {
-    "editor.codeActionsOnSave": {
-        "source.biome": "explicit",
-        "source.organizeImports.biome": "explicit"
-    }
+	"editor.codeActionsOnSave": {
+		"source.biome": "explicit",
+		"source.organizeImports.biome": "explicit"
+	}
 }

@@ -1,18 +1,9 @@
-import pino from "pino";
-import { isVerbose } from "./arguments";
 import winston from "winston";
-
-// export const logger = pino({
-// 	level: process.env.LOG_LEVEL || "info",
-// 	enabled: isVerbose,
-// 	safe: true,
-// 	transport: {
-// 		target: "pino-pretty",
-// 	},
-// });
+import { isVerbose } from "./arguments";
 
 export const logger = winston.createLogger({
 	level: isVerbose ? "debug" : "info",
+	silent: !isVerbose,
 	format: winston.format.combine(
 		winston.format.colorize(),
 		winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),

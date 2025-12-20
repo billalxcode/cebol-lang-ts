@@ -1,6 +1,7 @@
 {
 	"name": "create-own-programming-language",
 	"module": "index.ts",
+	"version": "0.0.1",
 	"type": "module",
 	"private": true,
 	"devDependencies": {
@@ -9,6 +10,12 @@
 	},
 	"peerDependencies": {
 		"typescript": "^5.9.3"
+	},
+	"scripts": {
+		"biome:check": "biome check",
+		"biome:fix": "biome fix",
+		"build:darwin": "bun build --compile --target=bun-darwin-arm64 --outfile ./bin/cebol ./index.ts",
+		"start": "bun run index.ts"
 	},
 	"dependencies": {
 		"pino": "^10.1.0",

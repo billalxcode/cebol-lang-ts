@@ -1,4 +1,7 @@
-import { CebolNodeNameEnum, type CebolStringNodeInterface } from "@/nodes/types";
+import {
+	CebolNodeNameEnum,
+	type CebolStringNodeInterface,
+} from "@/nodes/types";
 
 export class CebolStringNode implements CebolStringNodeInterface {
 	public name = CebolNodeNameEnum.STRING_NODE;
