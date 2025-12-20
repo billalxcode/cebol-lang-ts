@@ -10,6 +10,7 @@ import type {
 
 export class CebolVariableStatement implements CebolBasicStatementInterface {
 	public parent: CebolParserInterface;
+	// biome-ignore lint: disable unused private field
 	private manager: CebolBasicStatementInterface;
 
 	constructor(
@@ -59,13 +60,11 @@ export class CebolVariableStatement implements CebolBasicStatementInterface {
 
 			logger.info(`Variable value expression: ${expr.toString()}`);
 			logger.info(`Variable assignment type: ${last_token.type}`);
-			logger.info(`Creating assignment node for variable: ${varNameToken.value}`);
-
-			return new CebolAssignNode(
-				varNameToken,
-				expr,
-				last_token.type,
+			logger.info(
+				`Creating assignment node for variable: ${varNameToken.value}`,
 			);
+
+			return new CebolAssignNode(varNameToken, expr, last_token.type);
 		} else if (last_token.type === CebolLexicalTokenEnum.IDENTIFIER) {
 			logger.info("Creating variable node assignment for identifier");
 			logger.info(`Variable identifier token: ${last_token.toString()}`);
@@ -73,9 +72,7 @@ export class CebolVariableStatement implements CebolBasicStatementInterface {
 
 			logger.info(`Variable value expression: ${expr.toString()}`);
 
-			return new CebolVariableNode(
-				varNameToken.value
-			);
+			return new CebolVariableNode(varNameToken.value);
 		} else {
 			throw new Error(`Invalid variable value type: ${last_token.toString()}`);
 		}

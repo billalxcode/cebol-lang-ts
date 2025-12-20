@@ -1,15 +1,10 @@
-import {
-	CebolNodeNameEnum,
-	type CebolVariableNodeInterface,
-} from "./types";
+import { CebolNodeNameEnum, type CebolVariableNodeInterface } from "./types";
 
 export class CebolVariableNode implements CebolVariableNodeInterface {
 	public name = CebolNodeNameEnum.VARIABLE_NODE;
 	public readonly varName: string;
 
-	constructor(
-		_name: string,
-	) {
+	constructor(_name: string) {
 		this.varName = _name;
 	}
 

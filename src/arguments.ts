@@ -20,7 +20,7 @@ export const { values, positionals } = parseArgs({
 			short: "r",
 			default: false,
 			description: "Start the REPL instead of executing a file",
-		}
+		},
 	},
 	strict: true,
 	allowPositionals: true,

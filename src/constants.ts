@@ -1,6 +1,7 @@
 // Basic characters
 export const DIGITS: string = "0123456789";
-export const LETTERS: string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+export const LETTERS: string =
+	"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
 export const IDENTIFIER_START_CHARS: string = LETTERS;
 export const IDENTIFIER_CHARS: string = LETTERS + DIGITS;
 export const COMMA: string = ",";

@@ -1,9 +1,9 @@
+import { version } from "./package.json";
 import { isRepl, positionals } from "./src/arguments";
 import { CebolInterpreter } from "./src/interpreter";
 import { CebolLexer } from "./src/lexer";
 import { logger } from "./src/logger";
 import { CebolParser } from "./src/parser";
-import { version } from "./package.json"
 
 function welcomeMessage() {
 	console.log("Cebol Language REPL");
@@ -13,11 +13,15 @@ function welcomeMessage() {
 }
 
 async function executeRepl() {
-	welcomeMessage()
+	welcomeMessage();
 
 	while (true) {
 		const input = prompt("cebol> ");
-		if (input === null || input.toLowerCase() === "exit" || input.toLowerCase() === "quit") {
+		if (
+			input === null ||
+			input.toLowerCase() === "exit" ||
+			input.toLowerCase() === "quit"
+		) {
 			console.log("Exiting REPL. Goodbye!");
 			break;
 		}
@@ -80,10 +84,10 @@ async function executeFile() {
 
 async function main() {
 	if (isRepl) {
-		await executeRepl()
+		await executeRepl();
 	} else {
-		await executeFile()
+		await executeFile();
 	}
 }
 
-await main()
+await main();

@@ -74,7 +74,7 @@ export class CebolParser implements CebolParserInterface {
 		const token = this.current_token;
 		logger.info(`Parsing factor, current token: ${token.toString()}`);
 
-		let factorNode: CebolASTNode
+		let factorNode: CebolASTNode;
 
 		switch (token.type) {
 			case CebolLexicalTokenEnum.NUMBER:
@@ -112,9 +112,9 @@ export class CebolParser implements CebolParserInterface {
 			const token = this.current_token;
 			this.eat(CebolLexicalTokenEnum.OPERATOR);
 
-			const left = node
-			const operator = token
-			const right = this.factor()
+			const left = node;
+			const operator = token;
+			const right = this.factor();
 
 			logger.info(
 				`Creating binary operation node: ${left.toString()} ${operator.value} ${right.toString()}`,

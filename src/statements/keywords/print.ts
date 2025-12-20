@@ -40,7 +40,9 @@ export class CebolPrintStatement implements CebolBasicStatementInterface {
 			);
 			if (this.parent.can_expr) {
 				const exprNode = this.parent.expr();
-				logger.info(`Expression node parsed in print statement: ${exprNode.toString()}`);
+				logger.info(
+					`Expression node parsed in print statement: ${exprNode.toString()}`,
+				);
 				bodies.push(exprNode);
 			} else {
 				bodies.push(this.current_token);

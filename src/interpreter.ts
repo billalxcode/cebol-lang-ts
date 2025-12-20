@@ -1,40 +1,51 @@
-import { couldStartTrivia } from "typescript";
-import { OPERATOR_DIVIDE, OPERATOR_MINUS, OPERATOR_MODULO, OPERATOR_MULTIPLY, OPERATOR_PLUS, OPERATOR_POWER } from "./constants";
+import {
+	OPERATOR_DIVIDE,
+	OPERATOR_MINUS,
+	OPERATOR_MODULO,
+	OPERATOR_MULTIPLY,
+	OPERATOR_PLUS,
+	OPERATOR_POWER,
+} from "./constants";
 import { logger } from "./logger";
-import { CebolAssignNode } from "./nodes/assignment";
-import { CebolBinaryOpNode } from "./nodes/binary";
-import { CebolNumberNode } from "./nodes/number";
-import { CebolPrintNode } from "./nodes/print";
-import { CebolProgramNode } from "./nodes/program";
-import { CebolStringNode } from "./nodes/string";
-import { CebolNodeNameEnum, type CebolASTNode, type CebolTokenInterface } from "./nodes/types";
-import { CebolVariableNode } from "./nodes/variable";
+import type { CebolAssignNode } from "./nodes/assignment";
+import type { CebolBinaryOpNode } from "./nodes/binary";
+import type { CebolNumberNode } from "./nodes/number";
+import type { CebolPrintNode } from "./nodes/print";
+import type { CebolProgramNode } from "./nodes/program";
+import type { CebolStringNode } from "./nodes/string";
+import {
+	type CebolASTNode,
+	CebolNodeNameEnum,
+	type CebolTokenInterface,
+} from "./nodes/types";
+import type { CebolVariableNode } from "./nodes/variable";
 
 export class CebolInterpreter {
-	private globals: Record<string, any>;
+	private globals: Record<string, string | number | bigint>;
 
 	constructor() {
 		this.globals = {};
 	}
 
-	// biome-ignore lint: disable any type usage temporarily
-	public visit(node: CebolASTNode): any {
+	public visit(node: CebolASTNode): string | number | bigint | null {
 		switch (node.name) {
-			case CebolNodeNameEnum.NUMBER_NODE:
+			case CebolNodeNameEnum.NUMBER_NODE: {
 				const numberNode = node as CebolNumberNode;
-				return numberNode.value
-			case CebolNodeNameEnum.STRING_NODE:
+				return numberNode.value;
+			}
+			case CebolNodeNameEnum.STRING_NODE: {
 				const stringNode = node as CebolStringNode;
-				return this.globals[stringNode.value] ?? stringNode.value
-			case CebolNodeNameEnum.BINARY_OP_NODE:
-				const binaryOpNode = node as CebolBinaryOpNode
+				return this.globals[stringNode.value] ?? stringNode.value;
+			}
+			case CebolNodeNameEnum.BINARY_OP_NODE: {
+				const binaryOpNode = node as CebolBinaryOpNode;
 
-				const left = this.visit(binaryOpNode.left as CebolASTNode);
-				const right = this.visit(binaryOpNode.right as CebolASTNode);
+				const left = this.visit(binaryOpNode.left as CebolASTNode) as number;
+				const right = this.visit(binaryOpNode.right as CebolASTNode) as number;
 
 				const operator = binaryOpNode.operator as CebolTokenInterface;
 
-				let output
+				let output: number;
 				switch (operator.value) {
 					case OPERATOR_PLUS:
 						output = left + right;
@@ -52,13 +63,14 @@ export class CebolInterpreter {
 						output = left % right;
 						break;
 					case OPERATOR_POWER:
-						output = Math.pow(left, right);
+						output = left ** right;
 						break;
 					default:
 						throw new Error(`Unknown operator: ${operator.value}`);
 				}
-				return output
-			case CebolNodeNameEnum.VARIABLE_NODE:
+				return output;
+			}
+			case CebolNodeNameEnum.VARIABLE_NODE: {
 				logger.info(`Visiting variable node: ${node.toString()}`);
 				const variableNode = node as CebolVariableNode;
 				logger.info(`Looking up variable: ${variableNode.varName}`);
@@ -68,8 +80,12 @@ export class CebolInterpreter {
 				const value = this.globals[variableNode.varName];
 				logger.info(`Variable value: ${value}`);
 
+				if (!value) {
+					throw new Error(`Undefined variable: ${variableNode.varName}`);
+				}
 				return value;
-			case CebolNodeNameEnum.ASSIGN_NODE:
+			}
+			case CebolNodeNameEnum.ASSIGN_NODE: {
 				const assignmentNode = node as CebolAssignNode;
 				logger.info(`Assigning variable: ${assignmentNode.toString()}`);
 				// if (!assignmentNode.value || typeof assignmentNode.value.name !== "string") {
@@ -77,26 +93,37 @@ export class CebolInterpreter {
 				// }
 				const variable = assignmentNode.variable as CebolTokenInterface;
 				const varName = variable.value;
-				const varValue = assignmentNode.value ? this.visit(assignmentNode.value as CebolASTNode) : undefined;
+				const varValue = assignmentNode.value
+					? this.visit(assignmentNode.value as CebolASTNode)
+					: undefined;
 
 				logger.info(`Setting variable '${varName}' to value: ${varValue}`);
-				this.globals[varName] = varValue;
-				return this.globals[varName];
-			case CebolNodeNameEnum.PRINT_NODE:
+				this.globals[varName] = varValue as string | number | bigint;
+				return this.globals[varName] as string | number | bigint;
+			}
+			case CebolNodeNameEnum.PRINT_NODE: {
 				const printNode = node as CebolPrintNode;
-				logger.info(`Executing print node with expressions: ${printNode.toString()}`);
+				logger.info(
+					`Executing print node with expressions: ${printNode.toString()}`,
+				);
 				for (const expr of printNode.expressions) {
 					logger.info(`Evaluating print expression: ${expr.toString()}`);
-					const value = this.visit(expr as CebolASTNode);
+					const value = this.visit(expr as CebolASTNode) as
+						| string
+						| number
+						| bigint
+						| null;
 					console.log(value);
 				}
-				return null
-			case CebolNodeNameEnum.PROGRAM_NODE:
+				return null;
+			}
+			case CebolNodeNameEnum.PROGRAM_NODE: {
 				const programNode = node as CebolProgramNode;
 				for (const stmt of programNode.bodies) {
 					this.visit(stmt as CebolASTNode);
 				}
-				return null
+				return null;
+			}
 			default:
 				throw new Error(`Unknown node type: ${node.name}`);
 		}

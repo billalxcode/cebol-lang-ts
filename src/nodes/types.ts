@@ -36,7 +36,10 @@ export interface CebolBaseNodeInterface {
 	toString(): string;
 }
 
-export type CebolAssignmentType = CebolLexicalTokenEnum.NUMBER | CebolLexicalTokenEnum.STRING | CebolLexicalTokenEnum.IDENTIFIER
+export type CebolAssignmentType =
+	| CebolLexicalTokenEnum.NUMBER
+	| CebolLexicalTokenEnum.STRING
+	| CebolLexicalTokenEnum.IDENTIFIER;
 
 export interface CebolNumberNodeInterface extends CebolBaseNodeInterface {
 	readonly value: number;
@@ -45,7 +48,7 @@ export interface CebolNumberNodeInterface extends CebolBaseNodeInterface {
 export interface CebolAssignNodeInterface extends CebolBaseNodeInterface {
 	readonly variable: CebolBaseNodeInterface;
 	readonly value: CebolBaseNodeInterface;
-	readonly type: CebolAssignmentType
+	readonly type: CebolAssignmentType;
 }
 
 export interface CebolBinaryOpNodeInterface extends CebolBaseNodeInterface {

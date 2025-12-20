@@ -1,8 +1,8 @@
 import {
-	CebolNodeNameEnum,
 	type CebolAssignmentType,
 	type CebolAssignNodeInterface,
 	type CebolBaseNodeInterface,
+	CebolNodeNameEnum,
 } from "@/nodes/types";
 
 export class CebolAssignNode implements CebolAssignNodeInterface {
@@ -10,12 +10,12 @@ export class CebolAssignNode implements CebolAssignNodeInterface {
 
 	public readonly variable: CebolBaseNodeInterface;
 	public readonly value: CebolBaseNodeInterface;
-	public readonly type: CebolAssignmentType
+	public readonly type: CebolAssignmentType;
 
 	constructor(
 		_variable: CebolBaseNodeInterface,
 		_value: CebolBaseNodeInterface,
-		_type: CebolAssignmentType
+		_type: CebolAssignmentType,
 	) {
 		this.variable = _variable;
 		this.value = _value;
