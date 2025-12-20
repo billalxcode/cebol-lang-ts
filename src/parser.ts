@@ -6,6 +6,7 @@ import { CebolNumberNode } from "./nodes/number";
 import { CebolStringNode } from "./nodes/string";
 import type { CebolASTNode, CebolTokenInterface } from "./nodes/types";
 import { CebolLexicalTokenEnum } from "./nodes/types";
+import { CebolVariableNode } from "./nodes/variable";
 import { CebolStatementManager } from "./statements/manager";
 import type {
 	CebolBasicStatementInterface,
@@ -87,7 +88,8 @@ export class CebolParser implements CebolParserInterface {
 			case CebolLexicalTokenEnum.IDENTIFIER:
 				this.eat(CebolLexicalTokenEnum.IDENTIFIER);
 				// i dont know what to do here yet haha
-				factorNode = new CebolStringNode(token.value);
+				logger.info(`Identifier factor encountered: ${token.value}`);
+				factorNode = new CebolVariableNode(token.value, CebolLexicalTokenEnum.IDENTIFIER);
 				break;
 			case CebolLexicalTokenEnum.LPARENTHESES:
 				this.eat(CebolLexicalTokenEnum.LPARENTHESES);

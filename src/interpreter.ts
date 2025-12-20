@@ -1,3 +1,4 @@
+import { couldStartTrivia } from "typescript";
 import { OPERATOR_DIVIDE, OPERATOR_MINUS, OPERATOR_MODULO, OPERATOR_MULTIPLY, OPERATOR_PLUS, OPERATOR_POWER } from "./constants";
 import { logger } from "./logger";
 import { CebolAssignNode } from "./nodes/assignment";
@@ -57,29 +58,35 @@ export class CebolInterpreter {
 						throw new Error(`Unknown operator: ${operator.value}`);
 				}
 				return output
-			case CebolNodeNameEnum.ASSIGN_NODE:
-				const assignNode = node as CebolAssignNode;
-				if (!assignNode.value || typeof assignNode.value.name !== "string") {
-					throw new Error(`Invalid assignment value`);
-				}
-				const value = this.visit(assignNode.value as CebolASTNode);
-				const variableNode = assignNode.variable as CebolVariableNode;
-				this.globals[variableNode.value.name] = value;
-				return value
 			case CebolNodeNameEnum.VARIABLE_NODE:
-				const variableNodeLookup = node as CebolVariableNode;
-				if (!variableNodeLookup.value || typeof variableNodeLookup.value.name !== "string") {
-					throw new Error(`Invalid variable reference`);
-				}
-				const varName = variableNodeLookup.varName;
-				if (this.globals.hasOwnProperty(varName)) {
-					return this.globals[varName];
-				} else {
-					throw new Error(`Undefined variable: ${varName}`);
-				}
+				logger.info(`Visiting variable node: ${node.toString()}`);
+				const variableNode = node as CebolVariableNode;
+				logger.info(`Looking up variable: ${variableNode.varName}`);
+
+				logger.info(`Current globals: ${JSON.stringify(this.globals)}`);
+
+				const value = this.globals[variableNode.varName];
+				logger.info(`Variable value: ${value}`);
+
+				return value;
+			case CebolNodeNameEnum.ASSIGN_NODE:
+				const assignmentNode = node as CebolAssignNode;
+				logger.info(`Assigning variable: ${assignmentNode.toString()}`);
+				// if (!assignmentNode.value || typeof assignmentNode.value.name !== "string") {
+				// 	throw new Error(`Invalid variable reference`);
+				// }
+				const variable = assignmentNode.variable as CebolTokenInterface;
+				const varName = variable.value;
+				const varValue = assignmentNode.value ? this.visit(assignmentNode.value as CebolASTNode) : undefined;
+
+				logger.info(`Setting variable '${varName}' to value: ${varValue}`);
+				this.globals[varName] = varValue;
+				return this.globals[varName];
 			case CebolNodeNameEnum.PRINT_NODE:
 				const printNode = node as CebolPrintNode;
+				logger.info(`Executing print node with expressions: ${printNode.toString()}`);
 				for (const expr of printNode.expressions) {
+					logger.info(`Evaluating print expression: ${expr.toString()}`);
 					const value = this.visit(expr as CebolASTNode);
 					console.log(value);
 				}

@@ -13,6 +13,7 @@ import winston from "winston";
 
 export const logger = winston.createLogger({
 	level: isVerbose ? "debug" : "info",
+	silent: !isVerbose,
 	format: winston.format.combine(
 		winston.format.colorize(),
 		winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
